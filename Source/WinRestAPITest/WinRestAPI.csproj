@@ -7,7 +7,7 @@
     <ProjectGuid>{EA1F30FC-C10F-4A14-94E8-F92DB0AB2956}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WinRestAPITest</RootNamespace>
+    <RootNamespace>ANTBX.WinRestAPI</RootNamespace>
     <AssemblyName>WinRestAPITest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -47,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VO\RankVO.cs" />
+    <Compile Include="VO\ProjectVO.cs" />
     <Compile Include="RestAPIClient.cs" />
-    <Compile Include="EmployeeDTO.cs" />
+    <Compile Include="VO\EmployeeVO.cs" />
     <Compile Include="FrmRestAPITest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +70,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

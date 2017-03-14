@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WinRestAPITest
+namespace ANTBX.WinRestAPI
 {
 	/// <summary>
 	/// 직원 정보 저장 객체.
 	/// </summary>
 	[Serializable]
-	public class EmployeeDTO
+	public class EmployeeVO
 	{
 
 		public string birthDate;
@@ -35,7 +35,9 @@ namespace WinRestAPITest
 		public string officeTel;
 		public string photo;
 		public string position;
-		public Rank rank;
+		public string prjInfo;
+		public ProjectVO project;
+		public RankVO rank;
 		public string rankDisp;
 		public string reason;
 		public string regEmpId;
@@ -50,16 +52,4 @@ namespace WinRestAPITest
 
 	}
 
-	[Serializable]
-	public class Rank
-	{
-		public string rankCode;
-		public string rankName;
-		public int rankOrder;
-		public string regEmpId;
-		public string regEmpNm;
-		public DateTime registDate { get; set; }
-		public DateTime updateDate { get; set; }
-		public string useYn;
-	}
 }

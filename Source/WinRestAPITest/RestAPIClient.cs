@@ -5,16 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace WinRestAPITest
+namespace ANTBX.WinRestAPI
 {
-	//public class Product
-	//{
-	//	public string Id { get; set; }
-	//	public string Name { get; set; }
-	//	public decimal Price { get; set; }
-	//	public string Category { get; set; }
-	//}
-    
+ 
     public class RestAPIClient
     {
 		public RestAPIClient()
@@ -23,90 +16,68 @@ namespace WinRestAPITest
 		}
 
         HttpClient _client;
+		
+		public bool IsConnect=false;
 
-        public void Connect()
+		/// <summary>
+		/// Connection 객체를 생성합니다.
+		/// </summary>
+		public void Connect(string strBaseAddress)
         {
 			_client = new HttpClient();
-			_client.BaseAddress = new Uri("http://api.anbtech.net/");
+			_client.BaseAddress = new Uri(strBaseAddress);//"http://api.anbtech.net:8080/"
 			_client.DefaultRequestHeaders.Accept.Clear();
 			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			IsConnect = true;
         }
 
+		/// <summary>
+		/// Connection 객체를 닫습니다.
+		/// </summary>
 		public void Close()
 		{
 			if (_client != null)	_client.Dispose();
 			_client = null;
+			IsConnect = false;
 		}
 
-        public void Test()
-        {
-			
-			_client = new HttpClient();
-			_client.BaseAddress = new Uri("http://api.anbtech.net/");
-            _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            try
-            {
-                // Create a new employee
-				List<EmployeeDTO> lstEmployee = new List<EmployeeDTO>();
-
-				// Get the employee list
-				lstEmployee = GetEmployees();
-
-				// Update the employee
-				// empId는 서버에서 자동 생성되는 듯함.
-				// empId가 동일하면 update, 다르면 insert. 직급 표시는 별도의 값이 있는듯?
-
-				lstEmployee[0].empId = "EMP_2017030814075557";
-				lstEmployee[0].empNm = "JAMES,kim2";
-				lstEmployee[0].rank.rankName = "대리"; // no effect
-				lstEmployee[0].empTel = "010-0000-0000";
-
-				UpdateEmployee(lstEmployee[0]);
-
-				// 화면에 다시 표시.
-				lstEmployee = GetEmployees();
-
-
-                // Delete the employee : id 제어.
-				var statusCode = DeleteEmployee(lstEmployee[0].empId);
-				Console.WriteLine("Deleted (HTTP Status = {(int)statusCode})");
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
-            Console.ReadLine();
-        }
- 
-		public List<EmployeeDTO> GetEmployees()
+		 
+		/// <summary>
+		/// 입력된 API 함수를 이용하여 데이터를 수집 합니다.
+		/// </summary>
+		/// <param name="strAPI"></param>
+		/// <returns></returns>
+		public HttpResponseMessage ANTBX_Get(string strAPI)
 		{
-			var lstEmployee = new List<EmployeeDTO>();
-			var response = _client.GetAsync("api/employee").Result;
-			if (response.IsSuccessStatusCode)
-			{
-				lstEmployee = response.Content.ReadAsAsync<List<EmployeeDTO>>().Result;
-			}
-
-			return lstEmployee;
+			return _client.GetAsync(strAPI).Result;
 		}
- 
-		public void UpdateEmployee(EmployeeDTO employee)
+
+		/// <summary>
+		/// 입력된 API 함수를 이용하여 CREATE/UPDATE 합니다.
+		/// </summary>
+		/// <param name="strAPI"> 호출 할 "/api/함수명" </param>
+		/// <param name="inputVo"> 함수에 입력 할 VO 객체</param>
+		public void ANTBX_Update(string strAPI, object inputVO)
 		{
-			HttpResponseMessage response = _client.PostAsJsonAsync("api/employee", employee).Result;
+			if (_client == null) return;
+
+			HttpResponseMessage response = _client.PostAsJsonAsync(strAPI, inputVO).Result;
 			response.EnsureSuccessStatusCode();
-
-			// Deserialize the updated employee from the response body.
-			response.Content.ReadAsAsync<EmployeeDTO>();
 		}
  
 
-		public HttpStatusCode DeleteEmployee(string id)
+		/// <summary>
+		/// 입력된 API 함수를 이용하여 지정된 키값에 해당하는 값을 DELETE 합니다.
+		/// </summary>
+		/// <param name="strAPI">호출 할 "/api/함수명" </param>
+		/// <param name="id">제거하기위한 키값</param>
+		/// <returns></returns>
+		public HttpStatusCode ANTBX_Delete(string strAPI, string id)
 		{
-			HttpResponseMessage response = _client.DeleteAsync(string.Format("api/employee/{0}", id)).Result;
+			if (_client == null) return HttpStatusCode.NotAcceptable;
+
+			HttpResponseMessage response = _client.DeleteAsync(string.Format("{0}/{1}",strAPI, id)).Result;
+
 			return response.StatusCode;
 		}
 

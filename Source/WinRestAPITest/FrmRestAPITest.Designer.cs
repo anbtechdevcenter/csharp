@@ -1,4 +1,4 @@
-﻿namespace WinRestAPITest
+﻿namespace ANTBX.WinRestAPI
 {
 	partial class FrmRestAPITest
 	{
@@ -36,17 +36,15 @@
 			this.textBox2 = new System.Windows.Forms.TextBox();
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
-			this.btnTest = new System.Windows.Forms.Button();
+			this.btnDelete = new System.Windows.Forms.Button();
+			this.btnUpdate = new System.Windows.Forms.Button();
+			this.btnRead = new System.Windows.Forms.Button();
+			this.btnCreate = new System.Windows.Forms.Button();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.btnTest);
 			this.panel1.Controls.Add(this.btnClose);
 			this.panel1.Controls.Add(this.btnConnect);
 			this.panel1.Controls.Add(this.textBox4);
@@ -54,10 +52,10 @@
 			this.panel1.Controls.Add(this.textBox2);
 			this.panel1.Controls.Add(this.textBox1);
 			this.panel1.Controls.Add(this.richTextBox1);
-			this.panel1.Controls.Add(this.button4);
-			this.panel1.Controls.Add(this.button3);
-			this.panel1.Controls.Add(this.button2);
-			this.panel1.Controls.Add(this.button1);
+			this.panel1.Controls.Add(this.btnDelete);
+			this.panel1.Controls.Add(this.btnUpdate);
+			this.panel1.Controls.Add(this.btnRead);
+			this.panel1.Controls.Add(this.btnCreate);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
@@ -124,59 +122,45 @@
 			this.richTextBox1.TabIndex = 2;
 			this.richTextBox1.Text = "";
 			// 
-			// button4
+			// btnDelete
 			// 
-			this.button4.Enabled = false;
-			this.button4.Location = new System.Drawing.Point(37, 123);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(75, 23);
-			this.button4.TabIndex = 1;
-			this.button4.Text = "Delete";
-			this.button4.UseVisualStyleBackColor = true;
-			this.button4.Click += new System.EventHandler(this.button4_Click);
+			this.btnDelete.Location = new System.Drawing.Point(37, 123);
+			this.btnDelete.Name = "btnDelete";
+			this.btnDelete.Size = new System.Drawing.Size(75, 23);
+			this.btnDelete.TabIndex = 1;
+			this.btnDelete.Text = "Delete";
+			this.btnDelete.UseVisualStyleBackColor = true;
+			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 			// 
-			// button3
+			// btnUpdate
 			// 
-			this.button3.Enabled = false;
-			this.button3.Location = new System.Drawing.Point(37, 94);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(75, 23);
-			this.button3.TabIndex = 1;
-			this.button3.Text = "Update";
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
+			this.btnUpdate.Location = new System.Drawing.Point(37, 94);
+			this.btnUpdate.Name = "btnUpdate";
+			this.btnUpdate.Size = new System.Drawing.Size(75, 23);
+			this.btnUpdate.TabIndex = 1;
+			this.btnUpdate.Text = "Update";
+			this.btnUpdate.UseVisualStyleBackColor = true;
+			this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
 			// 
-			// button2
+			// btnRead
 			// 
-			this.button2.Enabled = false;
-			this.button2.Location = new System.Drawing.Point(37, 65);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(75, 23);
-			this.button2.TabIndex = 1;
-			this.button2.Text = "Read";
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.btnRead.Location = new System.Drawing.Point(37, 65);
+			this.btnRead.Name = "btnRead";
+			this.btnRead.Size = new System.Drawing.Size(75, 23);
+			this.btnRead.TabIndex = 1;
+			this.btnRead.Text = "Read";
+			this.btnRead.UseVisualStyleBackColor = true;
+			this.btnRead.Click += new System.EventHandler(this.btnRead_Click);
 			// 
-			// button1
+			// btnCreate
 			// 
-			this.button1.Enabled = false;
-			this.button1.Location = new System.Drawing.Point(37, 36);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(75, 23);
-			this.button1.TabIndex = 0;
-			this.button1.Text = "Create";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
-			// 
-			// btnTest
-			// 
-			this.btnTest.Location = new System.Drawing.Point(208, 7);
-			this.btnTest.Name = "btnTest";
-			this.btnTest.Size = new System.Drawing.Size(75, 23);
-			this.btnTest.TabIndex = 4;
-			this.btnTest.Text = "Test";
-			this.btnTest.UseVisualStyleBackColor = true;
-			this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+			this.btnCreate.Location = new System.Drawing.Point(37, 36);
+			this.btnCreate.Name = "btnCreate";
+			this.btnCreate.Size = new System.Drawing.Size(75, 23);
+			this.btnCreate.TabIndex = 0;
+			this.btnCreate.Text = "Create";
+			this.btnCreate.UseVisualStyleBackColor = true;
+			this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
 			// 
 			// FrmRestAPITest
 			// 
@@ -200,13 +184,12 @@
 		private System.Windows.Forms.TextBox textBox2;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.RichTextBox richTextBox1;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button3;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnDelete;
+		private System.Windows.Forms.Button btnUpdate;
+		private System.Windows.Forms.Button btnRead;
+		private System.Windows.Forms.Button btnCreate;
 		private System.Windows.Forms.Button btnConnect;
 		private System.Windows.Forms.Button btnClose;
-		private System.Windows.Forms.Button btnTest;
 	}
 }
 
