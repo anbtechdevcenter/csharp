@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace ANTBX.WinRestAPI
+namespace AnBTech.RestAPI
 {
 	public partial class FrmRestAPITest : Form
 	{
@@ -20,19 +20,13 @@ namespace ANTBX.WinRestAPI
 		{
 			InitializeComponent();
 		}
-
-		RestAPIClient aa = new RestAPIClient();
-
+ 
 		string API_URL = "/api/employee";
 
 
 		// Create
 		private void btnCreate_Click(object sender, EventArgs e)
 		{
-			if (!aa.IsConnect)
-			{
-				MessageBox.Show("Click Connect"); return;
-			}
 
 			// creat
 			var emp = new EmployeeVO()
@@ -47,7 +41,7 @@ namespace ANTBX.WinRestAPI
 				empEngNm = null,
 				empFlag = "CREATE22",
 				empHp = "010CREATE22",
-				empNm = "CREATE,kim22",
+				empNm = textBox1.Text,
 				empPwd = null,
 				empTel = "010-0000-0000",
 				empZip = null,
@@ -85,7 +79,7 @@ namespace ANTBX.WinRestAPI
 				prjInfo = null
 			};
 
-			aa.ANTBX_Update(API_URL, emp);
+			ANBTX.Create(API_URL, emp);
 		}
 
 
@@ -94,11 +88,7 @@ namespace ANTBX.WinRestAPI
 
 		private void btnRead_Click(object sender, EventArgs e)
 		{
-			if (!aa.IsConnect)
-			{
-				MessageBox.Show("Click Connect"); return;
-			}
-
+		 
 			// read
 			richTextBox1.AppendText("Employee Read....\n\r");
 			
@@ -133,7 +123,7 @@ namespace ANTBX.WinRestAPI
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = aa.ANTBX_Get(strAPI);
+			var response = ANBTX.Get(strAPI);
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -148,15 +138,17 @@ namespace ANTBX.WinRestAPI
 		
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
-			if (!aa.IsConnect)
-			{
-				MessageBox.Show("Click Connect"); return;
-			}
 
 			// update
-			var emp = new EmployeeVO();
-			emp.empId = "EMP_201611180045133";
-			emp.email = "astatine@mail.mail";
+			var lstEmployee = GetEmployee(API_URL);
+
+			if (lstEmployee.Any(o=>o.empId.Equals(textBox3.Text)))
+			{
+				var emp = lstEmployee.Where(o => o.empId.Equals(textBox3.Text)).ToArray()[0];
+				emp.email = "updateTest!!!!!!!!!";
+
+				ANBTX.Update(API_URL, emp);
+			}
 			
 			// 이렇게 하고 업데이트하니 에러발생. 
 			// error info.
@@ -169,35 +161,14 @@ namespace ANTBX.WinRestAPI
 			//"path": "/api/employee"
 			//}
 
-			aa.ANTBX_Update(API_URL, emp);
 		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
-
-			if (!aa.IsConnect)
-			{
-				MessageBox.Show("Click Connect"); return;
-			}
-
 			// delete
-			var em = new EmployeeVO();
-
-			em.empId = "EMP_2017030813473756";
-
-			aa.ANTBX_Delete(API_URL, em.empId);
+			ANBTX.Delete(API_URL, textBox4.Text);
 			btnRead_Click(null, null);
 		}
 
-		private void btnConnect_Click(object sender, EventArgs e)
-		{
-			aa.Connect("http://api.anbtech.net:8080/");
-		}
-
-		private void btnClose_Click(object sender, EventArgs e)
-		{
-			aa.Close();
-		}
-		 
 	}
 }

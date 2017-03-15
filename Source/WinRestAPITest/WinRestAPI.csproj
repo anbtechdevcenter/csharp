@@ -7,7 +7,7 @@
     <ProjectGuid>{EA1F30FC-C10F-4A14-94E8-F92DB0AB2956}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ANTBX.WinRestAPI</RootNamespace>
+    <RootNamespace>AnBTech.RestAPI</RootNamespace>
     <AssemblyName>WinRestAPITest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.Services.WebApi, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
@@ -49,7 +50,7 @@
   <ItemGroup>
     <Compile Include="VO\RankVO.cs" />
     <Compile Include="VO\ProjectVO.cs" />
-    <Compile Include="RestAPIClient.cs" />
+    <Compile Include="ANBTX.cs" />
     <Compile Include="VO\EmployeeVO.cs" />
     <Compile Include="FrmRestAPITest.cs">
       <SubType>Form</SubType>

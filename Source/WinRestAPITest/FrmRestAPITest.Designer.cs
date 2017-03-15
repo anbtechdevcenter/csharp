@@ -1,4 +1,4 @@
-﻿namespace ANTBX.WinRestAPI
+﻿namespace AnBTech.RestAPI
 {
 	partial class FrmRestAPITest
 	{
@@ -29,8 +29,6 @@
 		private void InitializeComponent()
 		{
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.btnClose = new System.Windows.Forms.Button();
-			this.btnConnect = new System.Windows.Forms.Button();
 			this.textBox4 = new System.Windows.Forms.TextBox();
 			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.textBox2 = new System.Windows.Forms.TextBox();
@@ -45,8 +43,6 @@
 			// 
 			// panel1
 			// 
-			this.panel1.Controls.Add(this.btnClose);
-			this.panel1.Controls.Add(this.btnConnect);
 			this.panel1.Controls.Add(this.textBox4);
 			this.panel1.Controls.Add(this.textBox3);
 			this.panel1.Controls.Add(this.textBox2);
@@ -62,45 +58,25 @@
 			this.panel1.Size = new System.Drawing.Size(543, 324);
 			this.panel1.TabIndex = 0;
 			// 
-			// btnClose
-			// 
-			this.btnClose.Location = new System.Drawing.Point(127, 7);
-			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(75, 23);
-			this.btnClose.TabIndex = 4;
-			this.btnClose.Text = "Close";
-			this.btnClose.UseVisualStyleBackColor = true;
-			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-			// 
-			// btnConnect
-			// 
-			this.btnConnect.Location = new System.Drawing.Point(37, 7);
-			this.btnConnect.Name = "btnConnect";
-			this.btnConnect.Size = new System.Drawing.Size(75, 23);
-			this.btnConnect.TabIndex = 4;
-			this.btnConnect.Text = "Connect";
-			this.btnConnect.UseVisualStyleBackColor = true;
-			this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
-			// 
 			// textBox4
 			// 
-			this.textBox4.Location = new System.Drawing.Point(170, 125);
+			this.textBox4.Location = new System.Drawing.Point(170, 101);
 			this.textBox4.Name = "textBox4";
 			this.textBox4.Size = new System.Drawing.Size(281, 21);
 			this.textBox4.TabIndex = 3;
-			this.textBox4.Text = "http://api.anbtech.net/api/employee/{id}";
+			this.textBox4.Text = "input delete empId.....";
 			// 
 			// textBox3
 			// 
-			this.textBox3.Location = new System.Drawing.Point(170, 96);
+			this.textBox3.Location = new System.Drawing.Point(170, 72);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(281, 21);
 			this.textBox3.TabIndex = 3;
-			this.textBox3.Text = "http://api.anbtech.net/api/employee";
+			this.textBox3.Text = "input update empId....";
 			// 
 			// textBox2
 			// 
-			this.textBox2.Location = new System.Drawing.Point(170, 67);
+			this.textBox2.Location = new System.Drawing.Point(170, 43);
 			this.textBox2.Name = "textBox2";
 			this.textBox2.Size = new System.Drawing.Size(281, 21);
 			this.textBox2.TabIndex = 3;
@@ -108,15 +84,15 @@
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new System.Drawing.Point(170, 38);
+			this.textBox1.Location = new System.Drawing.Point(170, 14);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(281, 21);
 			this.textBox1.TabIndex = 3;
-			this.textBox1.Text = "http://api.anbtech.net/api/employee";
+			this.textBox1.Text = "input Name";
 			// 
 			// richTextBox1
 			// 
-			this.richTextBox1.Location = new System.Drawing.Point(28, 158);
+			this.richTextBox1.Location = new System.Drawing.Point(28, 134);
 			this.richTextBox1.Name = "richTextBox1";
 			this.richTextBox1.Size = new System.Drawing.Size(463, 143);
 			this.richTextBox1.TabIndex = 2;
@@ -124,7 +100,7 @@
 			// 
 			// btnDelete
 			// 
-			this.btnDelete.Location = new System.Drawing.Point(37, 123);
+			this.btnDelete.Location = new System.Drawing.Point(37, 99);
 			this.btnDelete.Name = "btnDelete";
 			this.btnDelete.Size = new System.Drawing.Size(75, 23);
 			this.btnDelete.TabIndex = 1;
@@ -134,7 +110,7 @@
 			// 
 			// btnUpdate
 			// 
-			this.btnUpdate.Location = new System.Drawing.Point(37, 94);
+			this.btnUpdate.Location = new System.Drawing.Point(37, 70);
 			this.btnUpdate.Name = "btnUpdate";
 			this.btnUpdate.Size = new System.Drawing.Size(75, 23);
 			this.btnUpdate.TabIndex = 1;
@@ -144,7 +120,7 @@
 			// 
 			// btnRead
 			// 
-			this.btnRead.Location = new System.Drawing.Point(37, 65);
+			this.btnRead.Location = new System.Drawing.Point(37, 41);
 			this.btnRead.Name = "btnRead";
 			this.btnRead.Size = new System.Drawing.Size(75, 23);
 			this.btnRead.TabIndex = 1;
@@ -154,7 +130,7 @@
 			// 
 			// btnCreate
 			// 
-			this.btnCreate.Location = new System.Drawing.Point(37, 36);
+			this.btnCreate.Location = new System.Drawing.Point(37, 12);
 			this.btnCreate.Name = "btnCreate";
 			this.btnCreate.Size = new System.Drawing.Size(75, 23);
 			this.btnCreate.TabIndex = 0;
@@ -188,8 +164,6 @@
 		private System.Windows.Forms.Button btnUpdate;
 		private System.Windows.Forms.Button btnRead;
 		private System.Windows.Forms.Button btnCreate;
-		private System.Windows.Forms.Button btnConnect;
-		private System.Windows.Forms.Button btnClose;
 	}
 }
 
