@@ -13,4 +13,5 @@ F:\anbtech\prj\csharp\Source\WinRestAPITest\bin\Debug\ko\System.Net.Http.Formatt
 F:\anbtech\prj\csharp\Source\WinRestAPITest\bin\Debug\ko\System.Web.Http.resources.dll
 F:\anbtech\prj\csharp\Source\WinRestAPITest\obj\Debug\WinRestAPITest.exe
 F:\anbtech\prj\csharp\Source\WinRestAPITest\obj\Debug\WinRestAPITest.pdb
-F:\anbtech\prj\csharp\Source\WinRestAPITest\obj\Debug\WinRestAPI.csprojResolveAssemblyReference.cache
+F:\anbtech\prj\csharp\Source\WinRestAPITest\obj\Debug\AnBTech.RestAPI.FrmEmployeeMag.resources
+F:\anbtech\prj\csharp\Source\WinRestAPITest\obj\Debug\AnBTech.RestAPI.FrmEmployeeSetting.resources

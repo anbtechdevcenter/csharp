@@ -170,5 +170,11 @@ namespace AnBTech.RestAPI
 			btnRead_Click(null, null);
 		}
 
+		private void btnOpenEmployeeUI_Click(object sender, EventArgs e)
+		{
+			var frmEmp = new FrmEmployeeMag();
+			frmEmp.ShowDialog();
+		}
+
 	}
 }

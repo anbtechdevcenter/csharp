@@ -48,6 +48,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FrmEmployeeMag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmployeeMag.Designer.cs">
+      <DependentUpon>FrmEmployeeMag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmEmployeeSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmEmployeeSetting.Designer.cs">
+      <DependentUpon>FrmEmployeeSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="VO\RankVO.cs" />
     <Compile Include="VO\ProjectVO.cs" />
     <Compile Include="ANBTX.cs" />
@@ -60,6 +72,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FrmEmployeeMag.resx">
+      <DependentUpon>FrmEmployeeMag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmEmployeeSetting.resx">
+      <DependentUpon>FrmEmployeeSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmRestAPITest.resx">
       <DependentUpon>FrmRestAPITest.cs</DependentUpon>
     </EmbeddedResource>
