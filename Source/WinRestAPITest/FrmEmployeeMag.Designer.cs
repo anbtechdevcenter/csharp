@@ -38,7 +38,6 @@
 			this.lblEmployeeName = new System.Windows.Forms.Label();
 			this.cboRank = new System.Windows.Forms.ComboBox();
 			this.lblRank = new System.Windows.Forms.Label();
-			this.txtTeamName = new System.Windows.Forms.TextBox();
 			this.lblTeamName = new System.Windows.Forms.Label();
 			this.btnNewEmployee = new System.Windows.Forms.Button();
 			this.btnSearch = new System.Windows.Forms.Button();
@@ -56,6 +55,7 @@
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.삭제ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.삭제ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.cboTeamName = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -92,6 +92,7 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.cboTeamName);
 			this.panel1.Controls.Add(this.dtpkTo);
 			this.panel1.Controls.Add(this.dtpkFrom);
 			this.panel1.Controls.Add(this.cboEmployeeName);
@@ -99,7 +100,6 @@
 			this.panel1.Controls.Add(this.lblEmployeeName);
 			this.panel1.Controls.Add(this.cboRank);
 			this.panel1.Controls.Add(this.lblRank);
-			this.panel1.Controls.Add(this.txtTeamName);
 			this.panel1.Controls.Add(this.lblTeamName);
 			this.panel1.Controls.Add(this.btnNewEmployee);
 			this.panel1.Controls.Add(this.btnSearch);
@@ -168,13 +168,6 @@
 			this.lblRank.TabIndex = 1;
 			this.lblRank.Text = "직급";
 			// 
-			// txtTeamName
-			// 
-			this.txtTeamName.Location = new System.Drawing.Point(87, 10);
-			this.txtTeamName.Name = "txtTeamName";
-			this.txtTeamName.Size = new System.Drawing.Size(360, 21);
-			this.txtTeamName.TabIndex = 2;
-			// 
 			// lblTeamName
 			// 
 			this.lblTeamName.AutoSize = true;
@@ -190,7 +183,7 @@
 			this.btnNewEmployee.Name = "btnNewEmployee";
 			this.btnNewEmployee.Size = new System.Drawing.Size(75, 30);
 			this.btnNewEmployee.TabIndex = 0;
-			this.btnNewEmployee.Text = "New";
+			this.btnNewEmployee.Text = "직원등록";
 			this.btnNewEmployee.UseVisualStyleBackColor = true;
 			this.btnNewEmployee.Click += new System.EventHandler(this.btnNewEmployee_Click);
 			// 
@@ -200,7 +193,7 @@
 			this.btnSearch.Name = "btnSearch";
 			this.btnSearch.Size = new System.Drawing.Size(75, 30);
 			this.btnSearch.TabIndex = 0;
-			this.btnSearch.Text = "Search";
+			this.btnSearch.Text = "조회";
 			this.btnSearch.UseVisualStyleBackColor = true;
 			this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
 			// 
@@ -339,6 +332,14 @@
 			this.삭제ToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
 			this.삭제ToolStripMenuItem1.Text = "삭제";
 			// 
+			// cboTeamName
+			// 
+			this.cboTeamName.FormattingEnabled = true;
+			this.cboTeamName.Location = new System.Drawing.Point(87, 10);
+			this.cboTeamName.Name = "cboTeamName";
+			this.cboTeamName.Size = new System.Drawing.Size(360, 20);
+			this.cboTeamName.TabIndex = 4;
+			// 
 			// FrmEmployeeMag
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -347,6 +348,7 @@
 			this.Controls.Add(this.splitContainer1);
 			this.Name = "FrmEmployeeMag";
 			this.Text = "A&B Employee Manager";
+			this.Load += new System.EventHandler(this.FrmEmployeeMag_Load);
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -377,7 +379,6 @@
 		private System.Windows.Forms.Label lblEmployeeName;
 		private System.Windows.Forms.ComboBox cboRank;
 		private System.Windows.Forms.Label lblRank;
-		private System.Windows.Forms.TextBox txtTeamName;
 		private System.Windows.Forms.Label lblTeamName;
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private System.Windows.Forms.Panel panel2;
@@ -396,5 +397,6 @@
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
 		private System.Windows.Forms.ToolStripMenuItem 삭제ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 삭제ToolStripMenuItem1;
+		private System.Windows.Forms.ComboBox cboTeamName;
 	}
 }

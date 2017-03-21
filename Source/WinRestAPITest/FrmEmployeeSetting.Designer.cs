@@ -28,27 +28,27 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.txtTeamName = new System.Windows.Forms.TextBox();
+			this.txtEmployeeName = new System.Windows.Forms.TextBox();
 			this.lblTeamName = new System.Windows.Forms.Label();
-			this.cboProjectName = new System.Windows.Forms.ComboBox();
+			this.cboTeamName = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
+			this.cboRank = new System.Windows.Forms.ComboBox();
+			this.cboEmployeeType = new System.Windows.Forms.ComboBox();
 			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.btnCreate = new System.Windows.Forms.Button();
 			this.btnUpdate = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// txtTeamName
+			// txtEmployeeName
 			// 
-			this.txtTeamName.Location = new System.Drawing.Point(16, 34);
-			this.txtTeamName.Name = "txtTeamName";
-			this.txtTeamName.Size = new System.Drawing.Size(145, 21);
-			this.txtTeamName.TabIndex = 5;
+			this.txtEmployeeName.Location = new System.Drawing.Point(16, 34);
+			this.txtEmployeeName.Name = "txtEmployeeName";
+			this.txtEmployeeName.Size = new System.Drawing.Size(145, 21);
+			this.txtEmployeeName.TabIndex = 5;
 			// 
 			// lblTeamName
 			// 
@@ -59,13 +59,13 @@
 			this.lblTeamName.TabIndex = 3;
 			this.lblTeamName.Text = "부서명";
 			// 
-			// cboProjectName
+			// cboTeamName
 			// 
-			this.cboProjectName.FormattingEnabled = true;
-			this.cboProjectName.Location = new System.Drawing.Point(16, 93);
-			this.cboProjectName.Name = "cboProjectName";
-			this.cboProjectName.Size = new System.Drawing.Size(145, 20);
-			this.cboProjectName.TabIndex = 6;
+			this.cboTeamName.FormattingEnabled = true;
+			this.cboTeamName.Location = new System.Drawing.Point(16, 93);
+			this.cboTeamName.Name = "cboTeamName";
+			this.cboTeamName.Size = new System.Drawing.Size(145, 20);
+			this.cboTeamName.TabIndex = 6;
 			// 
 			// label1
 			// 
@@ -103,21 +103,21 @@
 			this.label4.TabIndex = 8;
 			this.label4.Text = "입사일";
 			// 
-			// comboBox1
+			// cboRank
 			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(248, 35);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(145, 20);
-			this.comboBox1.TabIndex = 6;
+			this.cboRank.FormattingEnabled = true;
+			this.cboRank.Location = new System.Drawing.Point(248, 35);
+			this.cboRank.Name = "cboRank";
+			this.cboRank.Size = new System.Drawing.Size(145, 20);
+			this.cboRank.TabIndex = 6;
 			// 
-			// comboBox2
+			// cboEmployeeType
 			// 
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Location = new System.Drawing.Point(248, 93);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(145, 20);
-			this.comboBox2.TabIndex = 6;
+			this.cboEmployeeType.FormattingEnabled = true;
+			this.cboEmployeeType.Location = new System.Drawing.Point(248, 93);
+			this.cboEmployeeType.Name = "cboEmployeeType";
+			this.cboEmployeeType.Size = new System.Drawing.Size(145, 20);
+			this.cboEmployeeType.TabIndex = 6;
 			// 
 			// dateTimePicker1
 			// 
@@ -135,6 +135,7 @@
 			this.btnCreate.TabIndex = 10;
 			this.btnCreate.Text = "등록";
 			this.btnCreate.UseVisualStyleBackColor = true;
+			this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
 			// 
 			// btnUpdate
 			// 
@@ -144,6 +145,7 @@
 			this.btnUpdate.TabIndex = 10;
 			this.btnUpdate.Text = "수정";
 			this.btnUpdate.UseVisualStyleBackColor = true;
+			this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
 			// 
 			// btnCancel
 			// 
@@ -153,6 +155,7 @@
 			this.btnCancel.TabIndex = 10;
 			this.btnCancel.Text = "취소";
 			this.btnCancel.UseVisualStyleBackColor = true;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
 			// FrmEmployeeSetting
 			// 
@@ -166,14 +169,15 @@
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.txtTeamName);
+			this.Controls.Add(this.txtEmployeeName);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.lblTeamName);
-			this.Controls.Add(this.comboBox1);
-			this.Controls.Add(this.comboBox2);
-			this.Controls.Add(this.cboProjectName);
+			this.Controls.Add(this.cboRank);
+			this.Controls.Add(this.cboEmployeeType);
+			this.Controls.Add(this.cboTeamName);
 			this.Name = "FrmEmployeeSetting";
 			this.Text = "사원 신규 등록 및 수정";
+			this.Load += new System.EventHandler(this.FrmEmployeeSetting_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -181,15 +185,15 @@
 
 		#endregion
 
-		private System.Windows.Forms.TextBox txtTeamName;
+		private System.Windows.Forms.TextBox txtEmployeeName;
 		private System.Windows.Forms.Label lblTeamName;
-		private System.Windows.Forms.ComboBox cboProjectName;
+		private System.Windows.Forms.ComboBox cboTeamName;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.ComboBox comboBox1;
-		private System.Windows.Forms.ComboBox comboBox2;
+		private System.Windows.Forms.ComboBox cboRank;
+		private System.Windows.Forms.ComboBox cboEmployeeType;
 		private System.Windows.Forms.DateTimePicker dateTimePicker1;
 		private System.Windows.Forms.Button btnCreate;
 		private System.Windows.Forms.Button btnUpdate;
