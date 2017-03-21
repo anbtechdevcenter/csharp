@@ -14,5 +14,8 @@ namespace AnBTech.RestAPI
 	{
 		public string prjId;
 		public string prjNm;
-	}
+        public string prjStatus;
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
+    }
 }
