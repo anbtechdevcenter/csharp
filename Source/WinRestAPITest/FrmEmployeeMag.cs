@@ -150,20 +150,149 @@ namespace AnBTech.RestAPI
 		/// <param name="e"></param>
 		private void btnSearch_Click(object sender, EventArgs e)
 		{
-			// Get하여 고용리스트를 다 불러옮.
-			var empList = ANBTX.Get(API_EMPLOYEE_URL);
+			var lstEmp = new List<EmployeeVO>();
+			var lstlstEmpId = new List<List<string>>();
 
 			// 부서명 필터
+			var strFilter = cboTeamName.Text;
+			if (!string.IsNullOrEmpty(strFilter) && !strFilter.ToUpper().Contains("NONE"))
+			{
+				lstlstEmpId.Add(_lstEmployeeTotal.Where(o => o.team != null && o.team.Equals(strFilter))
+												 .Select(o => o.empId).ToList());	
+			}
+
 
 			// 직급 필터
+			strFilter = cboRank.Text;
+			if (!string.IsNullOrEmpty(strFilter) && !strFilter.ToUpper().Contains("NONE"))
+			{
+				lstlstEmpId.Add(_lstEmployeeTotal.Where(o => o.rank != null && o.rank.rankName != null && o.rank.rankName.Equals(strFilter))
+												 .Select(o => o.empId).ToList());
+			}
+
 
 			// 사원명 필터
+			strFilter = cboEmployeeName.Text;
+			if (!string.IsNullOrEmpty(strFilter) && !strFilter.ToUpper().Contains("NONE"))
+			{
+				lstlstEmpId.Add(_lstEmployeeTotal.Where(o => o.empNm != null && o.empNm.Equals(strFilter))
+											     .Select(o => o.empId).ToList());
+			}
 
-			// 검색년월일로 입사년도 필터
 
 			// 프로젝트명 필터
+			strFilter = cboProjectName.Text;
+			if (!string.IsNullOrEmpty(strFilter) && !strFilter.ToUpper().Contains("NONE"))
+			{
+				lstlstEmpId.Add(_lstEmployeeTotal.Where(o => (o.project != null && o.project.prjNm != null && o.project.prjNm.Equals(strFilter)))
+												 .Select(o => o.empId).ToList());
+			}
+
 
 			// 사원분류 필터.
+			var isContract = chkContractEmployee.Checked;
+			var isPermanent = chkPermanentEmployee.Checked;
+			var lsttemp = new List<string>();
+
+			if (isContract)
+			{
+				lsttemp.AddRange(_lstEmployeeTotal.Where(o => o.empFlag != null && o.empFlag.Equals("계약직")).Select(o => o.empId).ToList());
+			}
+
+			if (isPermanent)
+			{
+				lsttemp.AddRange(_lstEmployeeTotal.Where(o => o.empFlag != null && o.empFlag.Equals("정규직")).Select(o => o.empId).ToList());
+			}
+
+			if (isContract || isPermanent)	lstlstEmpId.Add(lsttemp);
+
+
+			// todo :
+			// 검색년월일로 입사년도 필터
+
+
+			// null인 filter가 없고, count가 0인게 없는지 체크.
+			if (lstlstEmpId.Count > 0 && 
+				!lstlstEmpId.Contains(null) && 
+				!lstlstEmpId.Where(o => o != null && o.Count == 0).Any())
+			{
+				foreach (var strEmpId in lstlstEmpId[0])
+				{
+					var iscontain = true;
+
+					for (var nCnt = 1; nCnt < lstlstEmpId.Count; nCnt++)
+					{
+						if (!lstlstEmpId[nCnt].Contains(strEmpId))
+						{
+							iscontain = false;
+							break;
+						}
+					}
+
+					if (iscontain)
+					{
+						lstEmp.Add(_lstEmployeeTotal.Where(o => o.empId.Equals(strEmpId)).FirstOrDefault());
+					}
+				}
+
+				lstEmp = lstEmp.Where(o => o != null).ToList();
+			}
+
+			// grid에 바인딩 한다.
+			var dt = new DataTable("Result");
+			dt.Columns.Add("No.", typeof(int));
+			dt.Columns.Add("사번", typeof(string));
+			dt.Columns.Add("성명", typeof(string));
+			dt.Columns.Add("부서", typeof(string));
+			dt.Columns.Add("직급", typeof(string));
+			dt.Columns.Add("구분", typeof(string));
+			dt.Columns.Add("입사일", typeof(DateTime));
+			dt.Columns.Add("등록일", typeof(DateTime));
+			
+			dt.Columns.Add("비고", typeof(string));
+			
+			if (lstEmp.Count > 0)
+			{
+				if (gridResult.Rows.Count > 0) gridResult.DataSource = null;
+
+				dt.BeginLoadData();
+				var nCnt = 1;
+				foreach(var emp in lstEmp)
+				{
+					var newDr = dt.NewRow();
+					newDr.ItemArray = new object[] {nCnt,emp.empId, emp.empNm, emp.team, emp.rank.rankName, emp.empFlag, emp.enteringDate, emp.registDste,emp.userInfo };
+					dt.Rows.Add(newDr);
+					nCnt++;
+				}
+				dt.EndLoadData();
+
+				dt.AcceptChanges();
+
+				gridResult.DataSource = dt;
+			}
+			else
+			{
+				if (lstlstEmpId.Count == 0)
+				{
+					if (gridResult.Rows.Count > 0) gridResult.DataSource = null;
+
+				
+					dt.BeginLoadData();
+					var nCnt = 1;
+					foreach (var emp in _lstEmployeeTotal)
+					{
+						var newDr = dt.NewRow();
+						newDr.ItemArray = new object[] { nCnt, emp.empId, emp.empNm, emp.team, emp.rank.rankName, emp.empFlag, emp.enteringDate, emp.registDste, emp.userInfo };
+						dt.Rows.Add(newDr);
+						nCnt++;
+					}
+					dt.EndLoadData();
+
+					dt.AcceptChanges();
+
+					gridResult.DataSource = dt;
+				}
+			}
 		}
 
 		private void btnNewEmployee_Click(object sender, EventArgs e)
@@ -177,8 +306,46 @@ namespace AnBTech.RestAPI
 			if (frmEmpSetting.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				// UI 결과가 등록/수정 인경우 직원 정보 갱신하여 화면에 뿌려줌. 취소는 작업없음.
+
+				btnSearch_Click(null, null);
 			}
 			
+		}
+
+		private void UpdateToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var empId = gridResult.SelectedRows[0].Cells[1].Value.ToString();
+
+			var emp = _lstEmployeeTotal.Where(o => o.empId.Equals(empId)).FirstOrDefault();
+
+			if ( emp !=null )
+			{
+				// 신규 사원 입력 UI 생성.
+				var frmEmpSetting = new FrmEmployeeSetting();
+				frmEmpSetting.IsNewEmployee = false;
+				frmEmpSetting.RankInfo = _lstRank;
+				frmEmpSetting.TeamInfo = _lstTeam;
+				frmEmpSetting.UpdateEmployee = emp;
+
+				if (frmEmpSetting.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+				{
+					btnSearch_Click(null, null);
+				}
+			}
+		}
+
+		private void DeleteToolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+			// delete
+			var empId = gridResult.SelectedRows[0].Cells[1].Value.ToString();
+
+			var emp = _lstEmployeeTotal.Where(o => o.empId.Equals(empId)).FirstOrDefault();
+
+			if (MessageBox.Show(string.Format("이름 : {0}, 직급 : {1} \r\n 삭제하시겠습니까?", emp.empNm, emp.rank.rankName),string.Empty,MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.OK)
+			{
+				ANBTX.Delete(API_EMPLOYEE_URL, empId);
+				btnSearch_Click(null, null);
+			}
 		}
 
 	}

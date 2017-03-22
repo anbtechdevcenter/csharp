@@ -31,6 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.cboTeamName = new System.Windows.Forms.ComboBox();
 			this.dtpkTo = new System.Windows.Forms.DateTimePicker();
 			this.dtpkFrom = new System.Windows.Forms.DateTimePicker();
 			this.cboEmployeeName = new System.Windows.Forms.ComboBox();
@@ -51,11 +52,10 @@
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPageSearchResult = new System.Windows.Forms.TabPage();
 			this.pnlSearchResult = new System.Windows.Forms.Panel();
-			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.gridResult = new System.Windows.Forms.DataGridView();
 			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.삭제ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.삭제ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.cboTeamName = new System.Windows.Forms.ComboBox();
+			this.UpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.DeleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
@@ -69,6 +69,7 @@
 			this.tabControl1.SuspendLayout();
 			this.tabPageSearchResult.SuspendLayout();
 			this.pnlSearchResult.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.gridResult)).BeginInit();
 			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -108,6 +109,14 @@
 			this.panel1.Name = "panel1";
 			this.panel1.Size = new System.Drawing.Size(1264, 39);
 			this.panel1.TabIndex = 0;
+			// 
+			// cboTeamName
+			// 
+			this.cboTeamName.FormattingEnabled = true;
+			this.cboTeamName.Location = new System.Drawing.Point(87, 10);
+			this.cboTeamName.Name = "cboTeamName";
+			this.cboTeamName.Size = new System.Drawing.Size(360, 20);
+			this.cboTeamName.TabIndex = 4;
 			// 
 			// dtpkTo
 			// 
@@ -297,48 +306,48 @@
 			// 
 			// pnlSearchResult
 			// 
-			this.pnlSearchResult.Controls.Add(this.treeView1);
+			this.pnlSearchResult.Controls.Add(this.gridResult);
 			this.pnlSearchResult.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnlSearchResult.Location = new System.Drawing.Point(3, 3);
 			this.pnlSearchResult.Name = "pnlSearchResult";
 			this.pnlSearchResult.Size = new System.Drawing.Size(1250, 566);
 			this.pnlSearchResult.TabIndex = 0;
 			// 
-			// treeView1
+			// gridResult
 			// 
-			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeView1.Location = new System.Drawing.Point(0, 0);
-			this.treeView1.Name = "treeView1";
-			this.treeView1.Size = new System.Drawing.Size(1250, 566);
-			this.treeView1.TabIndex = 0;
+			this.gridResult.AllowUserToAddRows = false;
+			this.gridResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridResult.ContextMenuStrip = this.contextMenuStrip1;
+			this.gridResult.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridResult.Location = new System.Drawing.Point(0, 0);
+			this.gridResult.MultiSelect = false;
+			this.gridResult.Name = "gridResult";
+			this.gridResult.RowTemplate.Height = 23;
+			this.gridResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this.gridResult.Size = new System.Drawing.Size(1250, 566);
+			this.gridResult.TabIndex = 2;
 			// 
 			// contextMenuStrip1
 			// 
 			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.삭제ToolStripMenuItem,
-            this.삭제ToolStripMenuItem1});
+            this.UpdateToolStripMenuItem,
+            this.DeleteToolStripMenuItem1});
 			this.contextMenuStrip1.Name = "contextMenuStrip1";
 			this.contextMenuStrip1.Size = new System.Drawing.Size(99, 48);
 			// 
-			// 삭제ToolStripMenuItem
+			// UpdateToolStripMenuItem
 			// 
-			this.삭제ToolStripMenuItem.Name = "삭제ToolStripMenuItem";
-			this.삭제ToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-			this.삭제ToolStripMenuItem.Text = "수정";
+			this.UpdateToolStripMenuItem.Name = "UpdateToolStripMenuItem";
+			this.UpdateToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+			this.UpdateToolStripMenuItem.Text = "수정";
+			this.UpdateToolStripMenuItem.Click += new System.EventHandler(this.UpdateToolStripMenuItem_Click);
 			// 
-			// 삭제ToolStripMenuItem1
+			// DeleteToolStripMenuItem1
 			// 
-			this.삭제ToolStripMenuItem1.Name = "삭제ToolStripMenuItem1";
-			this.삭제ToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
-			this.삭제ToolStripMenuItem1.Text = "삭제";
-			// 
-			// cboTeamName
-			// 
-			this.cboTeamName.FormattingEnabled = true;
-			this.cboTeamName.Location = new System.Drawing.Point(87, 10);
-			this.cboTeamName.Name = "cboTeamName";
-			this.cboTeamName.Size = new System.Drawing.Size(360, 20);
-			this.cboTeamName.TabIndex = 4;
+			this.DeleteToolStripMenuItem1.Name = "DeleteToolStripMenuItem1";
+			this.DeleteToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
+			this.DeleteToolStripMenuItem1.Text = "삭제";
+			this.DeleteToolStripMenuItem1.Click += new System.EventHandler(this.DeleteToolStripMenuItem1_Click);
 			// 
 			// FrmEmployeeMag
 			// 
@@ -364,6 +373,7 @@
 			this.tabControl1.ResumeLayout(false);
 			this.tabPageSearchResult.ResumeLayout(false);
 			this.pnlSearchResult.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.gridResult)).EndInit();
 			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -393,10 +403,10 @@
 		private System.Windows.Forms.TabControl tabControl1;
 		private System.Windows.Forms.TabPage tabPageSearchResult;
 		private System.Windows.Forms.Panel pnlSearchResult;
-		private System.Windows.Forms.TreeView treeView1;
 		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-		private System.Windows.Forms.ToolStripMenuItem 삭제ToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem 삭제ToolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem UpdateToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem DeleteToolStripMenuItem1;
 		private System.Windows.Forms.ComboBox cboTeamName;
+		private System.Windows.Forms.DataGridView gridResult;
 	}
 }

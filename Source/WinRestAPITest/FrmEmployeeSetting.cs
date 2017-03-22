@@ -38,6 +38,7 @@ namespace AnBTech.RestAPI
 			}
 
 			// 구분 초기화.
+			cboEmployeeType.Items.Add("[None]");
 			cboEmployeeType.Items.Add("정규직");
 			cboEmployeeType.Items.Add("계약직");
 			cboEmployeeType.SelectedIndex = 0;
@@ -53,6 +54,28 @@ namespace AnBTech.RestAPI
 				btnCreate.Enabled = false;
 			}
 
+			if (UpdateEmployee != null)
+			{
+				
+				// empType bind
+				var nIndex = UpdateEmployee.empFlag == null ? 0 : UpdateEmployee.empFlag.Equals("정규직") ? 1 : 2;
+				cboEmployeeType.SelectedIndex = nIndex;
+				
+
+				// rank bind
+				var lstRank = RankInfo.Select(o=>o.rankName).ToList();
+				nIndex = UpdateEmployee.rank == null ? 0 : lstRank.IndexOf(UpdateEmployee.rank.rankName);
+				cboRank.SelectedIndex = nIndex+1;
+
+				// team name bind
+				nIndex = string.IsNullOrEmpty(UpdateEmployee.team) ? 0 : TeamInfo.IndexOf(UpdateEmployee.team);
+				cboTeamName.SelectedIndex = nIndex+1;
+
+				// name bind.
+				txtEmployeeName.Text = UpdateEmployee.empNm;
+
+				// 날짜 추가.
+			}
 
 		}
 
@@ -81,7 +104,15 @@ namespace AnBTech.RestAPI
 
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
+			UpdateEmployee.empNm = txtEmployeeName.Text;
+			UpdateEmployee.rank = RankInfo.Where(o=>o.rankName.Equals(cboRank.Text)).First();
+			UpdateEmployee.empFlag = cboEmployeeType.Text;
+			UpdateEmployee.team = cboTeamName.Text;
 
+			ANBTX.Update("/api/employee", UpdateEmployee);
+
+			this.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.Close();
 		}
 
 		private void btnCreate_Click(object sender, EventArgs e)
@@ -136,6 +167,9 @@ namespace AnBTech.RestAPI
 			};
 
 			ANBTX.Create("/api/employee", emp);
+
+			this.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.Close();
 		}
 	}
 }
