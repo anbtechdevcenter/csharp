@@ -24,9 +24,9 @@ namespace AnBTech.RestAPI
 		public string empPwd;
 		public string empTel;
 		public string empZip;
-		public DateTime enteringDate { get; set; }
-		public DateTime leaveDate { get; set; }
-		public DateTime loginDate { get; set; }
+		public string enteringDate;
+		public string leaveDate;
+		public string loginDate;
 		public string maritalDate;
 		public string maritalState;
 		public string officeTel;
@@ -39,11 +39,11 @@ namespace AnBTech.RestAPI
 		public string reason;
 		public string regEmpId;
 		public string regEmpNm;
-		public DateTime registDste { get; set; }
+		public string registDste;
 		public string spouseTel;
 		public string state;
 		public string team;
-		public DateTime updateDate { get; set; }
+		public string updateDate;
 		public string userInfo;
 		public string workPosition;
 

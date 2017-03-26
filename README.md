@@ -24,3 +24,12 @@
 
 - RestAPI Manual.pdf 추가.  
   
+  
+  
+[17.03.26]
+Date Type 속성 java <-> c# 간 호환 작업 진행.
+-   "enteringDate": "2017-03-26T12:47:37.093Z", <-string 으로 인식.
+
+C#에서 URL로 업데이트, 생성 작업시 입력 방법 : dateValue.ToUniversalTime().ToString("s") + "Z",
+
+C#에서 날짜 값 사용시 Convert.ToDateTime(enteringDate) 하면됨.

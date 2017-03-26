@@ -27,7 +27,7 @@ namespace AnBTech.RestAPI
 		// Create
 		private void btnCreate_Click(object sender, EventArgs e)
 		{
-
+			var currentDate = DateTime.Now.ToLongDateString();
 			// creat
 			var emp = new EmployeeVO()
 			{
@@ -45,9 +45,9 @@ namespace AnBTech.RestAPI
 				empPwd = null,
 				empTel = "010-0000-0000",
 				empZip = null,
-				enteringDate = DateTime.Now,
-				leaveDate = DateTime.Now,
-				loginDate = DateTime.Now,
+				enteringDate = currentDate,
+				leaveDate = currentDate,
+				loginDate = currentDate,
 				maritalDate = null,
 				maritalState = "true",
 				officeTel = null,
@@ -56,7 +56,7 @@ namespace AnBTech.RestAPI
 				reason = null,
 				regEmpId = null,
 				regEmpNm = null,
-				registDste = DateTime.Now,
+				registDste = currentDate,
 				rank = new RankVO
 				{
 					rankCode = "RANK50",
@@ -65,14 +65,14 @@ namespace AnBTech.RestAPI
 					useYn = "Y",
 					regEmpId = null,
 					regEmpNm = null,
-					registDate = new DateTime(),
-					updateDate = new DateTime()
+					registDate = currentDate,
+					updateDate = ""
 				},
 				project = null,
 				spouseTel = null,
 				state = null,
 				team = null,
-				updateDate = DateTime.Now,
+				updateDate = currentDate,
 				workPosition = null,
 				userInfo = "CREATE,kim22",
 				rankDisp = "CREATE",

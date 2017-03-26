@@ -12,8 +12,8 @@ namespace AnBTech.RestAPI
 		public int rankOrder;
 		public string regEmpId;
 		public string regEmpNm;
-		public DateTime registDate { get; set; }
-		public DateTime updateDate { get; set; }
+		public string registDate;
+		public string updateDate;
 		public string useYn;
 	}
 }

@@ -206,10 +206,20 @@ namespace AnBTech.RestAPI
 
 			if (isContract || isPermanent)	lstlstEmpId.Add(lsttemp);
 
-
+			
 			// todo :
 			// 검색년월일로 입사년도 필터
+			var dtfrom = dtpkFrom.Value;
+			var dtto = dtpkTo.Value;
+			var lstDateFilter = new List<string>();
 
+			lstDateFilter.AddRange(_lstEmployeeTotal
+				.Where(o => o.enteringDate != null &&
+					Convert.ToDateTime(o.enteringDate) >= dtfrom &&
+					Convert.ToDateTime(o.enteringDate) <= dtto)
+				.Select(o => o.empId).ToList());
+
+			lstlstEmpId.Add(lstDateFilter);
 
 			// null인 filter가 없고, count가 0인게 없는지 체크.
 			if (lstlstEmpId.Count > 0 && 
@@ -306,7 +316,7 @@ namespace AnBTech.RestAPI
 			if (frmEmpSetting.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				// UI 결과가 등록/수정 인경우 직원 정보 갱신하여 화면에 뿌려줌. 취소는 작업없음.
-
+				InitControl();
 				btnSearch_Click(null, null);
 			}
 			
@@ -329,6 +339,7 @@ namespace AnBTech.RestAPI
 
 				if (frmEmpSetting.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 				{
+					InitControl();
 					btnSearch_Click(null, null);
 				}
 			}
@@ -341,9 +352,10 @@ namespace AnBTech.RestAPI
 
 			var emp = _lstEmployeeTotal.Where(o => o.empId.Equals(empId)).FirstOrDefault();
 
-			if (MessageBox.Show(string.Format("이름 : {0}, 직급 : {1} \r\n 삭제하시겠습니까?", emp.empNm, emp.rank.rankName),string.Empty,MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.OK)
+			if (MessageBox.Show(string.Format("이름 : {0}, 직급 : {1} \r\n 삭제하시겠습니까?", emp.empNm, emp.rank.rankName),string.Empty,MessageBoxButtons.OKCancel,MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.OK)
 			{
 				ANBTX.Delete(API_EMPLOYEE_URL, empId);
+				InitControl();
 				btnSearch_Click(null, null);
 			}
 		}

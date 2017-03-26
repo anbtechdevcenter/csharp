@@ -47,11 +47,13 @@ namespace AnBTech.RestAPI
 			{
 				btnUpdate.Enabled = false;
 				btnCreate.Enabled = true;
+				//dateTimePicker1.Enabled = true;
 			}
 			else
 			{
 				btnUpdate.Enabled = true;
 				btnCreate.Enabled = false;
+				//dateTimePicker1.Enabled = false;
 			}
 
 			if (UpdateEmployee != null)
@@ -108,6 +110,8 @@ namespace AnBTech.RestAPI
 			UpdateEmployee.rank = RankInfo.Where(o=>o.rankName.Equals(cboRank.Text)).First();
 			UpdateEmployee.empFlag = cboEmployeeType.Text;
 			UpdateEmployee.team = cboTeamName.Text;
+			UpdateEmployee.updateDate = DateTime.Now.ToUniversalTime().ToString("s") + "Z"; ;
+			UpdateEmployee.enteringDate = dateTimePicker1.Value.ToUniversalTime().ToString("s") + "Z";
 
 			ANBTX.Update("/api/employee", UpdateEmployee);
 
@@ -140,9 +144,9 @@ namespace AnBTech.RestAPI
 				empPwd = null,
 				empTel = "",
 				empZip = null,
-				enteringDate = dateTimePicker1.Value,
-				leaveDate = DateTime.MaxValue,
-				loginDate = DateTime.MaxValue,
+				enteringDate = dateTimePicker1.Value.ToUniversalTime().ToString("s") + "Z",
+				leaveDate = DateTime.MaxValue.ToUniversalTime().ToString("s") + "Z",
+				loginDate = DateTime.MaxValue.ToUniversalTime().ToString("s") + "Z",
 				maritalDate = null,
 				maritalState = "true",
 				officeTel = null,
@@ -151,7 +155,7 @@ namespace AnBTech.RestAPI
 				reason = null,
 				regEmpId = null,
 				regEmpNm = null,
-				registDste = DateTime.Now,
+				registDste = DateTime.Now.ToUniversalTime().ToString("s") + "Z",
 
 				rank = RankInfo.Where(o=>o.rankName.Equals(cboRank.Text)).First(),
 
@@ -159,7 +163,7 @@ namespace AnBTech.RestAPI
 				spouseTel = null,
 				state = null,
 				team = cboTeamName.Text,
-				updateDate = DateTime.Now,
+				updateDate = DateTime.Now.ToUniversalTime().ToString("s") + "Z",
 				workPosition = null,
 				userInfo = "",
 				rankDisp = "",
