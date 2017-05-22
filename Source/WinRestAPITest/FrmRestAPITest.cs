@@ -176,5 +176,10 @@ namespace AnBTech.RestAPI
 			frmEmp.ShowDialog();
 		}
 
-	}
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var frmPrj = new FrmProject();
+            frmPrj.ShowDialog();
+        }
+    }
 }
