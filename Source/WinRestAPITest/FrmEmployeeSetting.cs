@@ -21,12 +21,14 @@ namespace AnBTech.RestAPI
 		public EmployeeVO UpdateEmployee { internal get; set; }
 		public List<RankVO> RankInfo { internal get; set; }
 		public List<string> TeamInfo { internal get; set; }
+        public List<ProjectVO> ProjectInfo { internal get; set; }
 	 
 		
 		private void FrmEmployeeSetting_Load(object sender, EventArgs e)
 		{
-			// 부서명 초기화.
-			if (TeamInfo != null)
+
+            // 부서명 초기화.
+            if (TeamInfo != null)
 			{
 				this.SetComboBox(cboTeamName, TeamInfo);
 			}
@@ -36,6 +38,12 @@ namespace AnBTech.RestAPI
 			{
 				this.SetComboBox(cboRank, RankInfo.Select(o=>o.rankName).ToList());
 			}
+
+            // 프로젝트 초기화
+            if (ProjectInfo != null)
+            {
+                this.SetComboBox(cboProject, ProjectInfo.Select(o => o.prjNm).ToList());
+            }
 
 			// 구분 초기화.
 			cboEmployeeType.Items.Add("[None]");
@@ -73,8 +81,13 @@ namespace AnBTech.RestAPI
 				nIndex = string.IsNullOrEmpty(UpdateEmployee.team) ? 0 : TeamInfo.IndexOf(UpdateEmployee.team);
 				cboTeamName.SelectedIndex = nIndex+1;
 
-				// name bind.
-				txtEmployeeName.Text = UpdateEmployee.empNm;
+                // project name bind
+                var lstProject = ProjectInfo.Select(o => o.prjNm).ToList();
+                nIndex = UpdateEmployee.project == null ? 0 : lstProject.IndexOf(UpdateEmployee.project.prjNm);
+                cboProject.SelectedIndex = nIndex+1;
+
+                // name bind.
+                txtEmployeeName.Text = UpdateEmployee.empNm;
 
 				// 날짜 추가.
 			}
@@ -106,14 +119,16 @@ namespace AnBTech.RestAPI
 
 		private void btnUpdate_Click(object sender, EventArgs e)
 		{
-			UpdateEmployee.empNm = txtEmployeeName.Text;
+			UpdateEmployee.empNm = UpdateEmployee.empNm != txtEmployeeName.Text ? txtEmployeeName.Text : UpdateEmployee.empNm;
 			UpdateEmployee.rank = RankInfo.Where(o=>o.rankName.Equals(cboRank.Text)).First();
 			UpdateEmployee.empFlag = cboEmployeeType.Text;
 			UpdateEmployee.team = cboTeamName.Text;
+            UpdateEmployee.project = ProjectInfo.Where(o => o.prjNm.Equals(cboProject.Text)).First();
 			UpdateEmployee.updateDate = DateTime.Now.ToUniversalTime().ToString("s") + "Z"; ;
 			UpdateEmployee.enteringDate = dateTimePicker1.Value.ToUniversalTime().ToString("s") + "Z";
+            UpdateEmployee.birthDate = dateTimePicker2.Value.ToUniversalTime().ToString("s") + "Z";
 
-			ANBTX.Update("/api/employee", UpdateEmployee);
+            ANBTX.Update("/api/employee", UpdateEmployee);
 
 			this.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.Close();
@@ -131,7 +146,7 @@ namespace AnBTech.RestAPI
 			var emp = new EmployeeVO()
 			{
 				empId = "",// 이거는 입력해도 의미 없음
-				birthDate = null,
+				birthDate = dateTimePicker2.Value.ToUniversalTime().ToString("s") + "Z",
 				birthState = null,
 				depart = null,
 				email = "",
@@ -159,7 +174,8 @@ namespace AnBTech.RestAPI
 
 				rank = RankInfo.Where(o=>o.rankName.Equals(cboRank.Text)).First(),
 
-				project = null,
+				project = ProjectInfo.Where(o=>o.prjNm.Equals(cboProject.Text)).First(),
+
 				spouseTel = null,
 				state = null,
 				team = cboTeamName.Text,
@@ -175,5 +191,5 @@ namespace AnBTech.RestAPI
 			this.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.Close();
 		}
-	}
+    }
 }

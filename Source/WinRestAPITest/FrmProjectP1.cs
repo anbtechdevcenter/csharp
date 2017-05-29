@@ -76,9 +76,26 @@ namespace AnBTech.RestAPI
         
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            prjId = edPrjId.Text;
-            FrmProjectP2 frmProjectP2 = new FrmProjectP2();
-            frmProjectP2.ShowDialog();
+            try
+            {
+                var prj = new ProjectVO()
+                {
+                    prjId = edPrjId.Text
+                };
+                if(edPrjId.Text != null)
+                {
+                    ANBTX.Delete(API_URL, prjId);
+                    MessageBox.Show("성공적으로 삭제되었습니다.");
+                }
+                else
+                {
+                    MessageBox.Show("이미 없는 데이터 입니다.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An exception occurred :" + ex.ToString());
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -90,9 +107,9 @@ namespace AnBTech.RestAPI
                     prjId = edPrjId.Text,// 이거는 입력해도 의미 없음
                     prjNm = edPrjName.Text,
                     prjStatus = cboStatus.Text,
-                    //startDate = Convert.ToDateTime(dtpStartDate.Value.ToString("yyyy-MM-dd HH:mm:ss tt")),
+                    startDate = dtpStartDate.Value.ToString("yyyy-MM-dd"),
+                    endDate = dtpEndDate.Value.ToString("yyyy-MM-dd")
                     //startDate = DateTime.Now,
-                    //endDate = dtpEndDate.Value,
                 };
 
                 if (edPrjId.Text.Length > 0)

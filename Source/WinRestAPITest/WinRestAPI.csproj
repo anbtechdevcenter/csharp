@@ -60,6 +60,12 @@
     <Compile Include="FrmEmployeeSetting.Designer.cs">
       <DependentUpon>FrmEmployeeSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmMealCoupon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMealCoupon.Designer.cs">
+      <DependentUpon>FrmMealCoupon.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmProject.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,7 @@
     <Compile Include="FrmProjectP2.designer.cs">
       <DependentUpon>FrmProjectP2.cs</DependentUpon>
     </Compile>
+    <Compile Include="VO\MealVO.cs" />
     <Compile Include="VO\RankVO.cs" />
     <Compile Include="VO\ProjectVO.cs" />
     <Compile Include="ANBTX.cs" />
@@ -95,6 +102,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmEmployeeSetting.resx">
       <DependentUpon>FrmEmployeeSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMealCoupon.resx">
+      <DependentUpon>FrmMealCoupon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmProject.resx">
       <DependentUpon>FrmProject.cs</DependentUpon>

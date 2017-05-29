@@ -53,7 +53,7 @@ namespace AnBTech.RestAPI
 
 
 			// 프로젝트명 초기화.
-			_lstProject = GetProject(API_RANK_URL);
+			_lstProject = GetProject(API_PROJECT_URL);
 			var lstProject = _lstProject.Select(o => o.prjNm).Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
 			this.SetComboBox(cboProjectName, lstProject);
 
@@ -312,8 +312,9 @@ namespace AnBTech.RestAPI
 			frmEmpSetting.IsNewEmployee = true;
 			frmEmpSetting.RankInfo = _lstRank;
 			frmEmpSetting.TeamInfo = _lstTeam;
+            frmEmpSetting.ProjectInfo = _lstProject;
 
-			if (frmEmpSetting.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (frmEmpSetting.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				// UI 결과가 등록/수정 인경우 직원 정보 갱신하여 화면에 뿌려줌. 취소는 작업없음.
 				InitControl();
@@ -335,6 +336,7 @@ namespace AnBTech.RestAPI
 				frmEmpSetting.IsNewEmployee = false;
 				frmEmpSetting.RankInfo = _lstRank;
 				frmEmpSetting.TeamInfo = _lstTeam;
+                frmEmpSetting.ProjectInfo = _lstProject;
 				frmEmpSetting.UpdateEmployee = emp;
 
 				if (frmEmpSetting.ShowDialog() == System.Windows.Forms.DialogResult.OK)

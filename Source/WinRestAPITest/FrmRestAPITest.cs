@@ -68,7 +68,14 @@ namespace AnBTech.RestAPI
 					registDate = currentDate,
 					updateDate = ""
 				},
-				project = null,
+				project = new ProjectVO
+                {
+                    prjId = null,
+                    prjNm = null,
+                    prjStatus = null,
+                    startDate = null,
+                    endDate = null
+                },
 				spouseTel = null,
 				state = null,
 				team = null,
@@ -180,6 +187,12 @@ namespace AnBTech.RestAPI
         {
             var frmPrj = new FrmProject();
             frmPrj.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var frmMc = new FrmMealCoupon();
+            frmMc.ShowDialog();
         }
     }
 }

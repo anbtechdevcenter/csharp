@@ -1,4 +1,6 @@
-﻿namespace AnBTech.RestAPI
+﻿using System;
+
+namespace AnBTech.RestAPI
 {
 	partial class FrmProjectP1
     {
@@ -31,9 +33,11 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.edPrjName = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.edPrjId = new System.Windows.Forms.TextBox();
             this.dtpStartDate = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,8 +48,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.edPrjName = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -83,16 +85,6 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(86, 12);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 5;
-            this.btnSave.Text = "저장";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // btnAdd
             // 
             this.btnAdd.Location = new System.Drawing.Point(171, 12);
@@ -102,6 +94,16 @@
             this.btnAdd.Text = "멤버 등록";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(86, 12);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 5;
+            this.btnSave.Text = "저장";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // panel3
             // 
@@ -120,6 +122,23 @@
             this.panel3.Size = new System.Drawing.Size(445, 132);
             this.panel3.TabIndex = 18;
             // 
+            // edPrjName
+            // 
+            this.edPrjName.Location = new System.Drawing.Point(113, 41);
+            this.edPrjName.Name = "edPrjName";
+            this.edPrjName.Size = new System.Drawing.Size(281, 21);
+            this.edPrjName.TabIndex = 22;
+            this.edPrjName.Text = "input Name";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(38, 44);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(69, 12);
+            this.label6.TabIndex = 21;
+            this.label6.Text = "프로젝트 명";
+            // 
             // edPrjId
             // 
             this.edPrjId.BackColor = System.Drawing.Color.LightGray;
@@ -136,6 +155,7 @@
             this.dtpStartDate.Name = "dtpStartDate";
             this.dtpStartDate.Size = new System.Drawing.Size(98, 21);
             this.dtpStartDate.TabIndex = 13;
+            this.dtpStartDate.Value = new System.DateTime(2017, 5, 23, 13, 47, 0, 0);
             // 
             // label2
             // 
@@ -207,23 +227,6 @@
             this.label1.Size = new System.Drawing.Size(125, 12);
             this.label1.TabIndex = 4;
             this.label1.Text = "프로젝트 등록 및 수정";
-            // 
-            // edPrjName
-            // 
-            this.edPrjName.Location = new System.Drawing.Point(113, 41);
-            this.edPrjName.Name = "edPrjName";
-            this.edPrjName.Size = new System.Drawing.Size(281, 21);
-            this.edPrjName.TabIndex = 22;
-            this.edPrjName.Text = "input Name";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(38, 44);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(69, 12);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "프로젝트 명";
             // 
             // FrmProjectP1
             // 

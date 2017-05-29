@@ -116,7 +116,7 @@ namespace AnBTech.RestAPI
         {
             DataTable dt = new DataTable();
             DataRow dr;
-
+            
             DataColumn colNo = dt.Columns.Add("NO", typeof(Int32));
             colNo.AutoIncrement = true;
             colNo.AutoIncrementSeed = 1;
@@ -126,9 +126,10 @@ namespace AnBTech.RestAPI
             DataColumn colStatus = dt.Columns.Add("STATUS", typeof(string));
             DataColumn colStartDate = dt.Columns.Add("START DATE", typeof(string));
             DataColumn colEndDate = dt.Columns.Add("END DATE", typeof(string));
-            DataColumn colMember = dt.Columns.Add("MEMBER", typeof(string));
+            //DataColumn colMember = dt.Columns.Add("MEMBER", typeof(string));
 
-            IEnumerable<ProjectVO> Query = from n in lstPrj select n;
+            IEnumerable<ProjectVO> Query = from n in lstPrj
+                                           select n;
             foreach (ProjectVO k in Query)
             {
                 dr = dt.NewRow();
@@ -138,7 +139,7 @@ namespace AnBTech.RestAPI
                 dr["STATUS"] = k.prjStatus;
                 dr["START DATE"] = k.startDate;
                 dr["END DATE"] = k.endDate;
-                dr["MEMBER"] = "이름";
+                //dr["MEMBER"] = "이름";
 
                 dt.Rows.Add(dr);
             }
@@ -169,6 +170,11 @@ namespace AnBTech.RestAPI
 
             FrmProjectP1 frmProjectP1 = new FrmProjectP1();
             frmProjectP1.ShowDialog();
+        }
+
+        private void panel3_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
