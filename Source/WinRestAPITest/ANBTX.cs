@@ -21,7 +21,7 @@ namespace AnBTech.RestAPI
 		static void Connect()
         {
 			_client = new HttpClient();
-			_client.BaseAddress = new Uri("http://restnfeel.com:8080/");
+			_client.BaseAddress = new Uri("http://api.restnfeel.com:8080/");
 			_client.DefaultRequestHeaders.Accept.Clear();
 			_client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
