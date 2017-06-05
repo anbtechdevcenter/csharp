@@ -78,6 +78,10 @@
             this.addrSearch = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.cboWorkPosition = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.txtUserInfo = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -155,7 +159,7 @@
             // 
             // btnCreate
             // 
-            this.btnCreate.Location = new System.Drawing.Point(164, 388);
+            this.btnCreate.Location = new System.Drawing.Point(166, 387);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 30);
             this.btnCreate.TabIndex = 10;
@@ -165,7 +169,7 @@
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(259, 388);
+            this.btnUpdate.Location = new System.Drawing.Point(261, 387);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 30);
             this.btnUpdate.TabIndex = 10;
@@ -175,7 +179,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(357, 388);
+            this.btnCancel.Location = new System.Drawing.Point(359, 387);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 30);
             this.btnCancel.TabIndex = 10;
@@ -404,6 +408,10 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtUserInfo);
+            this.groupBox1.Controls.Add(this.label24);
+            this.groupBox1.Controls.Add(this.cboWorkPosition);
+            this.groupBox1.Controls.Add(this.label23);
             this.groupBox1.Controls.Add(this.cboEmployeeBrithState);
             this.groupBox1.Controls.Add(this.label22);
             this.groupBox1.Controls.Add(this.cboEmployeeLeaveType);
@@ -422,7 +430,7 @@
             this.groupBox1.Controls.Add(this.cboProject);
             this.groupBox1.Location = new System.Drawing.Point(13, 233);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(576, 112);
+            this.groupBox1.Size = new System.Drawing.Size(576, 139);
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "상세정보";
@@ -545,11 +553,46 @@
             this.pictureBox1.TabIndex = 26;
             this.pictureBox1.TabStop = false;
             // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(28, 112);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(41, 12);
+            this.label23.TabIndex = 26;
+            this.label23.Text = "근무지";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // cboWorkPosition
+            // 
+            this.cboWorkPosition.FormattingEnabled = true;
+            this.cboWorkPosition.Location = new System.Drawing.Point(78, 109);
+            this.cboWorkPosition.Name = "cboWorkPosition";
+            this.cboWorkPosition.Size = new System.Drawing.Size(111, 20);
+            this.cboWorkPosition.TabIndex = 27;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(209, 112);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(29, 12);
+            this.label24.TabIndex = 28;
+            this.label24.Text = "기타";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtUserInfo
+            // 
+            this.txtUserInfo.Location = new System.Drawing.Point(258, 108);
+            this.txtUserInfo.Name = "txtUserInfo";
+            this.txtUserInfo.Size = new System.Drawing.Size(296, 21);
+            this.txtUserInfo.TabIndex = 43;
+            // 
             // FrmEmployeeSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 435);
+            this.ClientSize = new System.Drawing.Size(601, 429);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.addrSearch);
@@ -647,5 +690,9 @@
         private System.Windows.Forms.Button addrSearch;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox txtUserInfo;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.ComboBox cboWorkPosition;
+        private System.Windows.Forms.Label label23;
     }
 }

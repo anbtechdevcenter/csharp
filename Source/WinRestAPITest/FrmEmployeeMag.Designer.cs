@@ -334,7 +334,6 @@
             this.dtpkTo.Size = new System.Drawing.Size(100, 21);
             this.dtpkTo.TabIndex = 3;
             this.dtpkTo.Visible = false;
-            this.dtpkTo.ValueChanged += new System.EventHandler(this.dtpkTo_ValueChanged);
             // 
             // lblSearchDate
             // 

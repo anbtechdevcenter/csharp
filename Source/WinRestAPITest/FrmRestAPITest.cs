@@ -194,5 +194,11 @@ namespace AnBTech.RestAPI
             var frmMc = new FrmMealCoupon();
             frmMc.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var frmCheckLogin = new FrmRestAPILogin();
+            frmCheckLogin.ShowDialog();
+        }
     }
 }

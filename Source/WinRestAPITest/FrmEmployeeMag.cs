@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Net.Http;
-
+using AnBTech.RestAPI.VO;
 
 namespace AnBTech.RestAPI
 {
@@ -27,11 +27,13 @@ namespace AnBTech.RestAPI
         readonly string API_EMPLOYEE_URL = "/api/employee";
         readonly string API_RANK_URL = "/api/rank";
         readonly string API_PROJECT_URL = "/api/project";
+        readonly string API_CODE_COMMON_URL = "/api/codeCommon";
 
         List<EmployeeVO> _lstEmployeeTotal;
         List<RankVO> _lstRank;
         List<ProjectVO> _lstProject;
         List<string> _lstTeam;
+        List<CommonCodeVO> _lstCodeCommon;
 
 
         private void FrmEmployeeMag_Load(object sender, EventArgs e)
@@ -41,6 +43,9 @@ namespace AnBTech.RestAPI
 
         private void InitControl()
         {
+            //공통 코드 ( 근무지역 초기화 )
+            _lstCodeCommon = GetCodeCommon(API_CODE_COMMON_URL);
+
             // 직원이름 초기화.
             _lstEmployeeTotal = GetEmployee(API_EMPLOYEE_URL);
             var lstEmpName = _lstEmployeeTotal.Select(o => o.empNm).ToList().Where(o => !string.IsNullOrEmpty(o)).ToList();
@@ -84,6 +89,25 @@ namespace AnBTech.RestAPI
                 combo.Items.AddRange(lstValue.ToArray());
                 combo.SelectedIndex = 0;
             }
+        }
+
+        /// <summary>
+        /// 공통코드 항목을 가져옵니다.
+        /// </summary>
+        /// 
+        /// <returns></returns>
+        public List<CommonCodeVO> GetCodeCommon(string strAPI)
+        {
+            var lstCodeCommon = new List<CommonCodeVO>();
+
+            var response = ANBTX.Get(strAPI);
+
+            if (response.IsSuccessStatusCode)
+            {
+                lstCodeCommon = response.Content.ReadAsAsync<List<CommonCodeVO>>().Result;
+            }
+
+            return lstCodeCommon;
         }
 
         /// <summary>
@@ -131,16 +155,16 @@ namespace AnBTech.RestAPI
         /// <returns></returns>
         public List<ProjectVO> GetProject(string strAPI)
         {
-            var lstObject = new List<ProjectVO>();
+            var lstProject = new List<ProjectVO>();
 
             var response = ANBTX.Get(strAPI);
 
             if (response.IsSuccessStatusCode)
             {
-                lstObject = response.Content.ReadAsAsync<List<ProjectVO>>().Result;
+                lstProject = response.Content.ReadAsAsync<List<ProjectVO>>().Result;
             }
 
-            return lstObject;
+            return lstProject;
         }
 
         /// <summary>
@@ -307,6 +331,7 @@ namespace AnBTech.RestAPI
             frmEmpSetting.RankInfo = _lstRank;
             frmEmpSetting.TeamInfo = _lstTeam;
             frmEmpSetting.ProjectInfo = _lstProject;
+            frmEmpSetting.CodeInfo = _lstCodeCommon;
 
             if (frmEmpSetting.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -354,11 +379,6 @@ namespace AnBTech.RestAPI
                 InitControl();
                 btnSearch_Click(null, null);
             }
-        }
-
-        private void dtpkTo_ValueChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

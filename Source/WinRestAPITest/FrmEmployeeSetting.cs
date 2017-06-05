@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AnBTech.RestAPI.VO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +23,7 @@ namespace AnBTech.RestAPI
         public List<RankVO> RankInfo { internal get; set; }
         public List<string> TeamInfo { internal get; set; }
         public List<ProjectVO> ProjectInfo { internal get; set; }
+        public List<CommonCodeVO> CodeInfo { internal get; set; }
 
 
         private void FrmEmployeeSetting_Load(object sender, EventArgs e)
@@ -45,10 +47,18 @@ namespace AnBTech.RestAPI
                 this.SetComboBox(cboProject, ProjectInfo.Select(o => o.prjNm).ToList());
             }
 
+            // 근무지 초기화 ( 공통코드 )
+            if(CodeInfo != null)
+            {
+                this.SetComboBox(cboWorkPosition, CodeInfo.Where(o => o.codeId.StartsWith("SITE_")).Select(o => o.codeNm).ToList());
+            }
+
             // 구분 초기화.
             cboEmployeeType.Items.Add("[None]");
             cboEmployeeType.Items.Add("정규직");
             cboEmployeeType.Items.Add("계약직");
+            cboEmployeeType.Items.Add("협력사직원");
+            cboEmployeeType.Items.Add("파트타임");
             cboEmployeeType.SelectedIndex = 1;
 
             // 이메일 주소 초기화
@@ -203,19 +213,19 @@ namespace AnBTech.RestAPI
             UpdateEmployee.empNm = txtEmployeeName.Text;
             UpdateEmployee.empEngNm = txtEmployeeEngName.Text;
             UpdateEmployee.rank = RankInfo.Where(o => o.rankName.Equals(cboRank.Text)).First();
-            UpdateEmployee.empFlag = cboEmployeeType.Text;
-            UpdateEmployee.team = cboTeamName.Text;
-            UpdateEmployee.email = txtEmailFirst + "@" + cboEmailAddr.Text;
+            UpdateEmployee.empFlag = cboEmployeeType.SelectedItem.ToString();
+            UpdateEmployee.team = cboTeamName.SelectedItem.ToString();
+            UpdateEmployee.email = txtEmailFirst + "@" + cboEmailAddr.SelectedItem.ToString();
             UpdateEmployee.empTel = txtEmployeeTel.Text;
             UpdateEmployee.empHp = txtEmployeeHtel.Text;
             UpdateEmployee.project = ProjectInfo.Where(o => o.prjNm.Equals(cboProject.Text)).First();
-            UpdateEmployee.maritalState = cboEmployeeMaritalState.Text != "기혼" ? "false" : "true";
-            UpdateEmployee.birthState = cboEmployeeBrithState.Text;
+            UpdateEmployee.maritalState = cboEmployeeMaritalState.SelectedItem.ToString() != "기혼" ? "false" : "true";
+            UpdateEmployee.birthState = cboEmployeeBrithState.SelectedItem.ToString();
             UpdateEmployee.updateDate = DateTime.Now.ToUniversalTime().ToString("s") + "Z"; ;
             UpdateEmployee.enteringDate = employeeEnteringDate.Value.ToUniversalTime().ToString("s") + "Z";
             UpdateEmployee.birthDate = employeeBirthDate.Value.ToUniversalTime().ToString("s") + "Z";
             UpdateEmployee.maritalDate = employeeMarital_date.Value.ToUniversalTime().ToString("s") + "Z";
-            UpdateEmployee.leaveDate = cboEmployeeLeaveType.Text != "퇴사" ? employeeLeaveDate.Value.ToUniversalTime().ToString("s") + "Z" : " ";
+            UpdateEmployee.leaveDate = cboEmployeeLeaveType.SelectedItem.ToString() != "퇴사" ? employeeLeaveDate.Value.ToUniversalTime().ToString("s") + "Z" : " ";
 
             ANBTX.Update("/api/employee", UpdateEmployee);
 
@@ -236,23 +246,23 @@ namespace AnBTech.RestAPI
             {
                 empId = "",// 이거는 입력해도 의미 없음
                 birthDate = employeeBirthDate.Value.ToUniversalTime().ToString("s") + "Z",
-                birthState = cboEmployeeBrithState.Text == "양력" ? "0" : cboEmployeeBrithState.Text == "음력" ? "1" : null,
+                birthState = cboEmployeeBrithState.SelectedItem.ToString() == "양력" ? "0" : cboEmployeeBrithState.SelectedItem.ToString() == "음력" ? "1" : "",
                 depart = null,
                 email = txtEmailFirst.Text + "@" + cboEmailAddr.Text,
                 empAddr = txtEmployeeAddr.Text,
                 empAddrDtl = txtEmployeeAddrDtl.Text,
                 empEngNm = txtEmployeeEngName.Text,
-                empFlag = cboEmployeeType.Text == "정직원" ? "0" : cboEmployeeType.Text == "계약직" ? "1" : cboEmployeeType.Text == "협력사직원" ? "2" : cboEmployeeType.Text == "파트타임" ? "3" : "9",
+                empFlag = cboEmployeeType.SelectedItem.ToString() == "정규직" ? "0" : cboEmployeeType.SelectedItem.ToString() == "계약직" ? "1" : cboEmployeeType.SelectedItem.ToString() == "협력사직원" ? "2" : cboEmployeeType.SelectedItem.ToString() == "파트타임" ? "3" : "9",
                 empHp = txtEmployeeHtel.Text,
                 empNm = txtEmployeeName.Text,
                 empPwd = null,
                 empTel = txtEmployeeTel.Text,
                 empZip = txtEmployeeZip.Text,
                 enteringDate = employeeEnteringDate.Value.ToUniversalTime().ToString("s") + "Z",
-                leaveDate = cboEmployeeLeaveType.Text != "퇴사" ? null : DateTime.MaxValue.ToUniversalTime().ToString("s") + "Z",
+                leaveDate = cboEmployeeLeaveType.Text != "퇴사" ? "" : employeeLeaveDate.Value.ToUniversalTime().ToString("s") + "Z",
                 loginDate = DateTime.MaxValue.ToUniversalTime().ToString("s") + "Z",
-                maritalDate = cboEmployeeMaritalState.Text != "기혼" ? null : employeeMarital_date.Value.ToUniversalTime().ToString("s") + "Z",
-                maritalState = cboEmployeeMaritalState.Text == "기혼" ? "1" : cboEmployeeMaritalState.Text == "미혼" ? "0" : null,
+                maritalDate = cboEmployeeMaritalState.SelectedItem.ToString() != "기혼" ? "" : employeeMarital_date.Value.ToUniversalTime().ToString("s") + "Z",
+                maritalState = cboEmployeeMaritalState.SelectedItem.ToString() == "기혼" ? "1" : cboEmployeeMaritalState.SelectedItem.ToString() == "미혼" ? "0" : "",
                 officeTel = null,
                 photo = null,
                 position = null,
@@ -261,15 +271,15 @@ namespace AnBTech.RestAPI
                 regEmpNm = null,
                 registDste = DateTime.Now.ToUniversalTime().ToString("s") + "Z",
 
-                rank = RankInfo.Where(o => o.rankName.Equals(cboRank.Text)).First(),
+                rank = RankInfo.Where(o => o.rankName.Equals(cboRank.SelectedItem.ToString())).First(),
 
-                project = ProjectInfo.Where(o => o.prjNm.Equals(cboProject.Text)).First(),
+                project = ProjectInfo.Where(o => o.prjNm.Equals(cboProject.SelectedItem.ToString())).First(),
 
                 spouseTel = null,
                 state = null,
                 team = cboTeamName.Text,
                 updateDate = DateTime.Now.ToUniversalTime().ToString("s") + "Z",
-                workPosition = null,
+                workPosition = cboWorkPosition.Text,
                 userInfo = "",
                 rankDisp = "",
                 prjInfo = null
