@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using AnBTech.RestAPI.VO;
 
 namespace AnBTech.RestAPI
 {
@@ -22,11 +23,12 @@ namespace AnBTech.RestAPI
 		}
  
 		string API_URL = "/api/employee";
+        public static AccessTokenVO TokenInfo { internal get; set; }
 
-
-		// Create
-		private void btnCreate_Click(object sender, EventArgs e)
+        // Create
+        private void btnCreate_Click(object sender, EventArgs e)
 		{
+            Console.WriteLine(TokenInfo.access_token);
 			var currentDate = DateTime.Now.ToLongDateString();
 			// creat
 			var emp = new EmployeeVO()
@@ -86,7 +88,7 @@ namespace AnBTech.RestAPI
 				prjInfo = null
 			};
 
-			ANBTX.Create(API_URL, emp);
+			ANBTX.Create(API_URL, TokenInfo.access_token, emp);
 		}
 
 
@@ -98,10 +100,11 @@ namespace AnBTech.RestAPI
 		 
 			// read
 			richTextBox1.AppendText("Employee Read....\n\r");
-			
-			try
+
+            try
 			{
-				var lstEmployee = GetEmployee(API_URL);
+                
+				var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token.ToString());
 
 				if (lstEmployee == null || lstEmployee.Count == 0)
 				{
@@ -126,11 +129,11 @@ namespace AnBTech.RestAPI
 		/// </summary>
 		/// <param name="strAPI"></param>
 		/// <returns></returns>
-		public List<EmployeeVO> GetEmployee(string strAPI)
+		public List<EmployeeVO> GetEmployee(string strAPI, string tokenInfo)
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = ANBTX.Get(strAPI);
+			var response = ANBTX.Get(strAPI, tokenInfo);
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -147,14 +150,14 @@ namespace AnBTech.RestAPI
 		{
 
 			// update
-			var lstEmployee = GetEmployee(API_URL);
+			var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token);
 
 			if (lstEmployee.Any(o=>o.empId.Equals(textBox3.Text)))
 			{
 				var emp = lstEmployee.Where(o => o.empId.Equals(textBox3.Text)).ToArray()[0];
 				emp.email = "updateTest!!!!!!!!!";
 
-				ANBTX.Update(API_URL, emp);
+				ANBTX.Update(API_URL, TokenInfo.access_token, emp);
 			}
 			
 			// 이렇게 하고 업데이트하니 에러발생. 
@@ -173,7 +176,7 @@ namespace AnBTech.RestAPI
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
 			// delete
-			ANBTX.Delete(API_URL, textBox4.Text);
+			ANBTX.Delete(API_URL, TokenInfo.access_token, textBox4.Text);
 			btnRead_Click(null, null);
 		}
 
@@ -199,6 +202,16 @@ namespace AnBTech.RestAPI
         {
             var frmCheckLogin = new FrmRestAPILogin();
             frmCheckLogin.ShowDialog();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void FrmRestAPITest_Load(object sender, EventArgs e)
+        {
+            Console.WriteLine(TokenInfo.access_token);
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using AnBTech.RestAPI.VO;
 
 namespace AnBTech.RestAPI
 {
@@ -29,7 +30,7 @@ namespace AnBTech.RestAPI
         public static string prjendDt = null;
         public static string prjstartDt = null;
         public static string prjStatus = null;
-        
+        public static AccessTokenVO TokenInfo { internal get; set; }
 
         private void InitControl()
         {
@@ -41,7 +42,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstPrj = GetProject(API_URL_PRJ);
+                var lstPrj = GetProject(API_URL_PRJ, TokenInfo.access_token);
                 if (lstPrj == null || lstPrj.Count == 0)
                 {
                     MessageBox.Show("There is no data.");
@@ -59,7 +60,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstEmp = GetEmployee(API_URL_EMP);
+                var lstEmp = GetEmployee(API_URL_EMP, TokenInfo.access_token);
                 if (lstEmp == null || lstEmp.Count == 0)
                 {
                     MessageBox.Show("There is no data.");
@@ -79,11 +80,11 @@ namespace AnBTech.RestAPI
 		/// </summary>
 		/// <param name="strAPI"></param>
 		/// <returns></returns>
-		public List<EmployeeVO> GetEmployee(string strAPI)
+		public List<EmployeeVO> GetEmployee(string strAPI, string token)
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = ANBTX.Get(strAPI);
+			var response = ANBTX.Get(strAPI, token);
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -98,11 +99,11 @@ namespace AnBTech.RestAPI
 		/// </summary>
 		/// <param name="strAPI"></param>
 		/// <returns></returns>
-		public List<ProjectVO> GetProject(string strAPI)
+		public List<ProjectVO> GetProject(string strAPI, string token)
         {
             var lstProject = new List<ProjectVO>();
 
-            var response = ANBTX.Get(strAPI);
+            var response = ANBTX.Get(strAPI, token);
 
             if (response.IsSuccessStatusCode)
             {

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using AnBTech.RestAPI.VO;
 
 namespace AnBTech.RestAPI
 {
@@ -25,6 +26,8 @@ namespace AnBTech.RestAPI
 		string API_URL = "/api/employee";
         string API_URL_EMP = "/api/employee";
 
+        public static AccessTokenVO TokenInfo { internal get; set; }
+
         private void InitControl()
         {
             commGetEmp();
@@ -34,7 +37,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstEmp = GetEmployee(API_URL_EMP);
+                var lstEmp = GetEmployee(API_URL_EMP, TokenInfo.access_token);
                 if (lstEmp == null || lstEmp.Count == 0)
                 {
                     MessageBox.Show("There is no data.");
@@ -102,7 +105,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstEmployee = GetEmployee(API_URL);
+                var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token);
                 for (int i = 0; i < grdRpt.Rows.Count; i++)
                 {
                     var chk = grdRpt.Rows[i].Cells[1].FormattedValue.ToString();
@@ -121,7 +124,7 @@ namespace AnBTech.RestAPI
                             //emp.project.endDate = DateTime.Now;
 
 
-                            ANBTX.Update(API_URL, emp);
+                            ANBTX.Update(API_URL, TokenInfo.access_token, emp);
                         }
                     }
                 }
@@ -139,11 +142,11 @@ namespace AnBTech.RestAPI
 		/// </summary>
 		/// <param name="strAPI"></param>
 		/// <returns></returns>
-		public List<EmployeeVO> GetEmployee(string strAPI)
+		public List<EmployeeVO> GetEmployee(string strAPI, string token)
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = ANBTX.Get(strAPI);
+			var response = ANBTX.Get(strAPI, token);
 
 			if (response.IsSuccessStatusCode)
 			{

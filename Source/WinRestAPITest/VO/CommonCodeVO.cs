@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace AnBTech.RestAPI.VO
 {
+    /// <summary>
+	/// 공통코드.
+	/// </summary>
+	[Serializable]
     public class CommonCodeVO
     {
         public string seqCode;

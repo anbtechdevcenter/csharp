@@ -24,6 +24,7 @@ namespace AnBTech.RestAPI
         public List<string> TeamInfo { internal get; set; }
         public List<ProjectVO> ProjectInfo { internal get; set; }
         public List<CommonCodeVO> CodeInfo { internal get; set; }
+        public static AccessTokenVO TokenInfo { internal get; set; }
 
 
         private void FrmEmployeeSetting_Load(object sender, EventArgs e)
@@ -227,7 +228,7 @@ namespace AnBTech.RestAPI
             UpdateEmployee.maritalDate = employeeMarital_date.Value.ToUniversalTime().ToString("s") + "Z";
             UpdateEmployee.leaveDate = cboEmployeeLeaveType.SelectedItem.ToString() != "퇴사" ? employeeLeaveDate.Value.ToUniversalTime().ToString("s") + "Z" : " ";
 
-            ANBTX.Update("/api/employee", UpdateEmployee);
+            ANBTX.Update("/api/employee", TokenInfo.access_token, UpdateEmployee);
 
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
@@ -285,7 +286,7 @@ namespace AnBTech.RestAPI
                 prjInfo = null
             };
 
-            ANBTX.Create("/api/employee", emp);
+            ANBTX.Create("/api/employee", TokenInfo.access_token, emp);
 
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();

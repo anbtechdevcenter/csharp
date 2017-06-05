@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using AnBTech.RestAPI.VO;
 
 namespace AnBTech.RestAPI
 {
@@ -22,6 +23,8 @@ namespace AnBTech.RestAPI
         }
 
         public static string prjId = null;
+
+        public static AccessTokenVO TokenInfo { internal get; set; }
 
         string API_URL = "/api/project";
 
@@ -60,11 +63,11 @@ namespace AnBTech.RestAPI
         /// </summary>
         /// <param name="strAPI"></param>
         /// <returns></returns>
-        public List<EmployeeVO> GetEmployee(string strAPI)
+        public List<EmployeeVO> GetEmployee(string strAPI, string token)
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = ANBTX.Get(strAPI);
+			var response = ANBTX.Get(strAPI, token);
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -84,7 +87,7 @@ namespace AnBTech.RestAPI
                 };
                 if(edPrjId.Text != null)
                 {
-                    ANBTX.Delete(API_URL, prjId);
+                    ANBTX.Delete(API_URL, TokenInfo.access_token, prjId);
                     MessageBox.Show("성공적으로 삭제되었습니다.");
                 }
                 else
@@ -114,11 +117,11 @@ namespace AnBTech.RestAPI
 
                 if (edPrjId.Text.Length > 0)
                 {
-                    ANBTX.Update(API_URL, prj);
+                    ANBTX.Update(API_URL, TokenInfo.access_token, prj);
                 }
                 else
                 {
-                    ANBTX.Create(API_URL, prj);
+                    ANBTX.Create(API_URL, TokenInfo.access_token, prj);
                 }
             }
             catch (Exception ex)

@@ -12,6 +12,7 @@ namespace AnBTech.RestAPI.VO
 	[Serializable]
     public class HolidayVO
     {
+        public string grant_type = "password";
         public string app1Date;
         public string app1EmpId;
         public string app1EmpNm;
