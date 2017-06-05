@@ -16,7 +16,7 @@ namespace AnBTech.RestAPI
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FrmRestAPITest());
+			Application.Run(new FrmRestAPILogin());
 		}
 	}
 }
