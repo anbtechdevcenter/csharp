@@ -12,7 +12,6 @@ namespace AnBTech.RestAPI.VO
 	[Serializable]
     public class CommonCodeVO
     {
-        internal string grant_type;
         public string seqCode;
         public string codeType;
         public string codeId;
