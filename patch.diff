@@ -1,0 +1,593 @@
+diff --git a/Source/WinRestAPITest/ANBTX.cs b/Source/WinRestAPITest/ANBTX.cs
+index 1c10df3..693a346 100644
+--- a/Source/WinRestAPITest/ANBTX.cs
++++ b/Source/WinRestAPITest/ANBTX.cs
+@@ -16,20 +16,19 @@ namespace AnBTech.RestAPI
+     {
+ 
+         static HttpClient _client;
++        public static AccessTokenVO tokenInfos;
+ 
+-        public static AccessTokenVO tokenInfos { internal get; set; }
+         public static string accessTokenHold;
+         /// <summary>
+         /// Connection 객체를 생성합니다.
+         /// </summary>
+-        static void Connect()
++        static void Connect(string tokenInfo)
+         {
+             _client = new HttpClient();
+             _client.BaseAddress = new Uri("http://restnfeel.com:8080/");
+             _client.DefaultRequestHeaders.Accept.Clear();
+-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+-            _client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenInfos.access_token.ToString());
++            _client.DefaultRequestHeaders.Add("Accept", "application/json");
++            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenInfo);
+         }
+ 
+         /// <summary>
+@@ -49,7 +48,7 @@ namespace AnBTech.RestAPI
+         /// <returns></returns>
+         public static HttpResponseMessage Get(string strAPI)
+         {
+-            if (_client == null) Connect();
++            if (_client == null) Connect(accessTokenHold);
+             return _client.GetAsync(strAPI).Result;
+         }
+ 
+@@ -60,7 +59,7 @@ namespace AnBTech.RestAPI
+         /// <param name="inputVo"> 함수에 입력 할 VO 객체</param>
+         public static void Create(string strAPI, object inputVO)
+         {
+-            if (_client == null) Connect();
++            if (_client == null) Connect(accessTokenHold);
+             HttpResponseMessage response = _client.PostAsJsonAsync(strAPI, inputVO).Result;
+             response.EnsureSuccessStatusCode();
+         }
+@@ -72,7 +71,7 @@ namespace AnBTech.RestAPI
+         /// <param name="inputVo"> 함수에 입력 할 VO 객체</param>
+         public static HttpResponseMessage Update(string strAPI, object inputVO)
+         {
+-            if (_client == null) Connect();
++            if (_client == null) Connect(accessTokenHold);
+             return PatchAsJsonAsync(_client, strAPI, inputVO);
+         }
+ 
+@@ -92,7 +91,7 @@ namespace AnBTech.RestAPI
+         /// <returns></returns>
+         public static HttpStatusCode Delete(string strAPI, string id)
+         {
+-            if (_client == null) Connect();
++            if (_client == null) Connect(accessTokenHold);
+ 
+             HttpResponseMessage response = _client.DeleteAsync(string.Format("{0}/{1}", strAPI, id)).Result;
+ 
+@@ -101,27 +100,6 @@ namespace AnBTech.RestAPI
+ 
+         //로그인
+         // 운영으로 들어갈 경우를 위해 URL을 남겨둠
+-        static HttpClient loginAccess;
+-        //static HttpWebRequest loginCheck;
+-
+-        public static void MainAsync(string strAPI, LoginVO checkInfo)
+-        {
+-            loginAccess = new HttpClient();
+-            loginAccess.BaseAddress = new Uri("http://restnfeel.com:8080");
+-            loginAccess.DefaultRequestHeaders.Add("Accept", "application/json");
+-            loginAccess.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "YW5iZGV2Y2VudGVyLWNsaWVudC13aXRoLXNlY3JldDpkZXZjZW50ZXI=");
+-            var content = new FormUrlEncodedContent(new[]
+-            {
+-                new KeyValuePair<string, string>("grant_type",checkInfo.grant_type),
+-                new KeyValuePair<string, string>("username",checkInfo.email),
+-                new KeyValuePair<string, string>("password",checkInfo.password)
+-            });
+-            var request = new HttpRequestMessage(new HttpMethod("POST"), strAPI) { Content = content };
+-            var result = loginAccess.SendAsync(request).Result;
+-            //var result2 = loginAccess.SendAsync(request).AsyncState;
+-            Console.WriteLine(result);
+-            //Console.WriteLine(result2);
+-        }
+ 
+         public static string WebRequestCheck(String strAPI, LoginVO check)
+         {
+@@ -155,7 +133,7 @@ namespace AnBTech.RestAPI
+                 char[] TokenCheck = { ',' };
+                 string[] accessTokenCheck = token.Split(TokenCheck);
+                 string[] tokenSplit = accessTokenCheck[0].Split(':');
+-                tokenInfos.access_token = tokenSplit[1].Split('"')[1];
++                TokenSet(tokenSplit[1].Split('"')[1]);
+                 return tokenSplit[1].Split('"')[1];
+             }
+             catch
+@@ -163,5 +141,13 @@ namespace AnBTech.RestAPI
+                 return null;
+             }
+         }
++        
++        public static String TokenSet(string tokenVal)
++        {
++            
++            accessTokenHold = Newtonsoft.Json.JsonConvert.SerializeObject(tokenVal);
++            Console.WriteLine(accessTokenHold);
++            return accessTokenHold;
++        }
+     }
+ }
+\ No newline at end of file
+diff --git a/Source/WinRestAPITest/App.config b/Source/WinRestAPITest/App.config
+index aa09dfb..9f11d71 100644
+--- a/Source/WinRestAPITest/App.config
++++ b/Source/WinRestAPITest/App.config
+@@ -1,10 +1,17 @@
+-﻿<?xml version="1.0" encoding="utf-8" ?>
++﻿<?xml version="1.0" encoding="utf-8"?>
+ <configuration>
+   <system.web>
+-    <sessionState cookieless="true"
+-                  regenerateExpiredSessionId="true" />
++    <sessionState cookieless="true" regenerateExpiredSessionId="true" />
+   </system.web>
+     <startup> 
+         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
+     </startup>
++  <runtime>
++    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
++      <dependentAssembly>
++        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
++        <bindingRedirect oldVersion="0.0.0.0-10.0.0.0" newVersion="10.0.0.0" />
++      </dependentAssembly>
++    </assemblyBinding>
++  </runtime>
+ </configuration>
+\ No newline at end of file
+diff --git a/Source/WinRestAPITest/FrmEmployeeMag.cs b/Source/WinRestAPITest/FrmEmployeeMag.cs
+index a18acc5..f960987 100644
+--- a/Source/WinRestAPITest/FrmEmployeeMag.cs
++++ b/Source/WinRestAPITest/FrmEmployeeMag.cs
+@@ -45,11 +45,11 @@ namespace AnBTech.RestAPI
+         private void InitControl()
+         {
+             //공통 코드 ( 근무지역 초기화 )
+-            _lstCodeCommon = GetCodeCommon(API_CODE_COMMON_URL, TokenInfo.access_token);
++            _lstCodeCommon = GetCodeCommon(API_CODE_COMMON_URL);
+             MessageBox.Show(TokenInfo.access_token);
+ 
+             // 직원이름 초기화.
+-            _lstEmployeeTotal = GetEmployee(API_EMPLOYEE_URL, TokenInfo.access_token);
++            _lstEmployeeTotal = GetEmployee(API_EMPLOYEE_URL);
+             var lstEmpName = _lstEmployeeTotal.Select(o => o.empNm).ToList().Where(o => !string.IsNullOrEmpty(o)).ToList();
+             this.SetComboBox(cboEmployeeName, lstEmpName);
+ 
+@@ -60,13 +60,13 @@ namespace AnBTech.RestAPI
+ 
+ 
+             // 프로젝트명 초기화.
+-            _lstProject = GetProject(API_PROJECT_URL, TokenInfo.access_token);
++            _lstProject = GetProject(API_PROJECT_URL);
+             var lstProject = _lstProject.Select(o => o.prjNm).Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
+             this.SetComboBox(cboProjectName, lstProject);
+ 
+ 
+             // 직급 초기화.
+-            _lstRank = GetRank(API_RANK_URL, TokenInfo.access_token);
++            _lstRank = GetRank(API_RANK_URL);
+             var lstRank = _lstRank.Select(o => o.rankName).ToList();
+             this.SetComboBox(cboRank, lstRank);
+ 
+@@ -98,11 +98,11 @@ namespace AnBTech.RestAPI
+         /// </summary>
+         /// 
+         /// <returns></returns>
+-        public List<CommonCodeVO> GetCodeCommon(string strAPI, string token)
++        public List<CommonCodeVO> GetCodeCommon(string strAPI)
+         {
+             var lstCodeCommon = new List<CommonCodeVO>();
+ 
+-            var response = ANBTX.Get(strAPI, token);
++            var response = ANBTX.Get(strAPI);
+ 
+             if (response.IsSuccessStatusCode)
+             {
+@@ -117,11 +117,11 @@ namespace AnBTech.RestAPI
+         /// </summary>
+         /// <param name="strAPI"></param>
+         /// <returns></returns>
+-        public List<EmployeeVO> GetEmployee(string strAPI, string token)
++        public List<EmployeeVO> GetEmployee(string strAPI)
+         {
+             var lstEmployee = new List<EmployeeVO>();
+ 
+-            var response = ANBTX.Get(strAPI, token);
++            var response = ANBTX.Get(strAPI);
+ 
+             if (response.IsSuccessStatusCode)
+             {
+@@ -136,11 +136,11 @@ namespace AnBTech.RestAPI
+         /// </summary>
+         /// <param name="strAPI"></param>
+         /// <returns></returns>
+-        public List<RankVO> GetRank(string strAPI, string token)
++        public List<RankVO> GetRank(string strAPI)
+         {
+             var lstObject = new List<RankVO>();
+ 
+-            var response = ANBTX.Get(strAPI, token);
++            var response = ANBTX.Get(strAPI);
+ 
+             if (response.IsSuccessStatusCode)
+             {
+@@ -155,11 +155,11 @@ namespace AnBTech.RestAPI
+         /// </summary>
+         /// <param name="strAPI"></param>
+         /// <returns></returns>
+-        public List<ProjectVO> GetProject(string strAPI, string token)
++        public List<ProjectVO> GetProject(string strAPI)
+         {
+             var lstProject = new List<ProjectVO>();
+ 
+-            var response = ANBTX.Get(strAPI, token);
++            var response = ANBTX.Get(strAPI);
+ 
+             if (response.IsSuccessStatusCode)
+             {
+@@ -377,7 +377,7 @@ namespace AnBTech.RestAPI
+ 
+             if (MessageBox.Show(string.Format("이름 : {0}, 직급 : {1} \r\n 삭제하시겠습니까?", emp.empNm, emp.rank.rankName), string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.OK)
+             {
+-                ANBTX.Delete(API_EMPLOYEE_URL, TokenInfo.access_token, empId);
++                ANBTX.Delete(API_EMPLOYEE_URL, empId);
+                 InitControl();
+                 btnSearch_Click(null, null);
+             }
+diff --git a/Source/WinRestAPITest/FrmEmployeeSetting.cs b/Source/WinRestAPITest/FrmEmployeeSetting.cs
+index 2aba44f..c8d80f3 100644
+--- a/Source/WinRestAPITest/FrmEmployeeSetting.cs
++++ b/Source/WinRestAPITest/FrmEmployeeSetting.cs
+@@ -228,7 +228,7 @@ namespace AnBTech.RestAPI
+             UpdateEmployee.maritalDate = employeeMarital_date.Value.ToUniversalTime().ToString("s") + "Z";
+             UpdateEmployee.leaveDate = cboEmployeeLeaveType.SelectedItem.ToString() != "퇴사" ? employeeLeaveDate.Value.ToUniversalTime().ToString("s") + "Z" : " ";
+ 
+-            ANBTX.Update("/api/employee", TokenInfo.access_token, UpdateEmployee);
++            ANBTX.Update("/api/employee", UpdateEmployee);
+ 
+             this.DialogResult = System.Windows.Forms.DialogResult.OK;
+             this.Close();
+@@ -286,7 +286,7 @@ namespace AnBTech.RestAPI
+                 prjInfo = null
+             };
+ 
+-            ANBTX.Create("/api/employee", TokenInfo.access_token, emp);
++            ANBTX.Create("/api/employee", emp);
+ 
+             this.DialogResult = System.Windows.Forms.DialogResult.OK;
+             this.Close();
+diff --git a/Source/WinRestAPITest/FrmProject.cs b/Source/WinRestAPITest/FrmProject.cs
+index 62abd17..0bfd98b 100644
+--- a/Source/WinRestAPITest/FrmProject.cs
++++ b/Source/WinRestAPITest/FrmProject.cs
+@@ -42,7 +42,7 @@ namespace AnBTech.RestAPI
+         {
+             try
+             {
+-                var lstPrj = GetProject(API_URL_PRJ, TokenInfo.access_token);
++                var lstPrj = GetProject(API_URL_PRJ);
+                 if (lstPrj == null || lstPrj.Count == 0)
+                 {
+                     MessageBox.Show("There is no data.");
+@@ -60,7 +60,7 @@ namespace AnBTech.RestAPI
+         {
+             try
+             {
+-                var lstEmp = GetEmployee(API_URL_EMP, TokenInfo.access_token);
++                var lstEmp = GetEmployee(API_URL_EMP);
+                 if (lstEmp == null || lstEmp.Count == 0)
+                 {
+                     MessageBox.Show("There is no data.");
+@@ -80,11 +80,11 @@ namespace AnBTech.RestAPI
+ 		/// </summary>
+ 		/// <param name="strAPI"></param>
+ 		/// <returns></returns>
+-		public List<EmployeeVO> GetEmployee(string strAPI, string token)
++		public List<EmployeeVO> GetEmployee(string strAPI)
+ 		{
+ 			var lstEmployee = new List<EmployeeVO>();
+ 
+-			var response = ANBTX.Get(strAPI, token);
++			var response = ANBTX.Get(strAPI);
+ 
+ 			if (response.IsSuccessStatusCode)
+ 			{
+@@ -99,11 +99,11 @@ namespace AnBTech.RestAPI
+ 		/// </summary>
+ 		/// <param name="strAPI"></param>
+ 		/// <returns></returns>
+-		public List<ProjectVO> GetProject(string strAPI, string token)
++		public List<ProjectVO> GetProject(string strAPI)
+         {
+             var lstProject = new List<ProjectVO>();
+ 
+-            var response = ANBTX.Get(strAPI, token);
++            var response = ANBTX.Get(strAPI);
+ 
+             if (response.IsSuccessStatusCode)
+             {
+diff --git a/Source/WinRestAPITest/FrmProjectP1.cs b/Source/WinRestAPITest/FrmProjectP1.cs
+index 10b0170..c467d3a 100644
+--- a/Source/WinRestAPITest/FrmProjectP1.cs
++++ b/Source/WinRestAPITest/FrmProjectP1.cs
+@@ -63,11 +63,11 @@ namespace AnBTech.RestAPI
+         /// </summary>
+         /// <param name="strAPI"></param>
+         /// <returns></returns>
+-        public List<EmployeeVO> GetEmployee(string strAPI, string token)
++        public List<EmployeeVO> GetEmployee(string strAPI)
+ 		{
+ 			var lstEmployee = new List<EmployeeVO>();
+ 
+-			var response = ANBTX.Get(strAPI, token);
++			var response = ANBTX.Get(strAPI);
+ 
+ 			if (response.IsSuccessStatusCode)
+ 			{
+@@ -87,7 +87,7 @@ namespace AnBTech.RestAPI
+                 };
+                 if(edPrjId.Text != null)
+                 {
+-                    ANBTX.Delete(API_URL, TokenInfo.access_token, prjId);
++                    ANBTX.Delete(API_URL, prjId);
+                     MessageBox.Show("성공적으로 삭제되었습니다.");
+                 }
+                 else
+@@ -117,11 +117,11 @@ namespace AnBTech.RestAPI
+ 
+                 if (edPrjId.Text.Length > 0)
+                 {
+-                    ANBTX.Update(API_URL, TokenInfo.access_token, prj);
++                    ANBTX.Update(API_URL, prj);
+                 }
+                 else
+                 {
+-                    ANBTX.Create(API_URL, TokenInfo.access_token, prj);
++                    ANBTX.Create(API_URL, prj);
+                 }
+             }
+             catch (Exception ex)
+diff --git a/Source/WinRestAPITest/FrmProjectP2.cs b/Source/WinRestAPITest/FrmProjectP2.cs
+index f4b3e02..f36406e 100644
+--- a/Source/WinRestAPITest/FrmProjectP2.cs
++++ b/Source/WinRestAPITest/FrmProjectP2.cs
+@@ -37,7 +37,7 @@ namespace AnBTech.RestAPI
+         {
+             try
+             {
+-                var lstEmp = GetEmployee(API_URL_EMP, TokenInfo.access_token);
++                var lstEmp = GetEmployee(API_URL_EMP);
+                 if (lstEmp == null || lstEmp.Count == 0)
+                 {
+                     MessageBox.Show("There is no data.");
+@@ -105,7 +105,7 @@ namespace AnBTech.RestAPI
+         {
+             try
+             {
+-                var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token);
++                var lstEmployee = GetEmployee(API_URL);
+                 for (int i = 0; i < grdRpt.Rows.Count; i++)
+                 {
+                     var chk = grdRpt.Rows[i].Cells[1].FormattedValue.ToString();
+@@ -124,7 +124,7 @@ namespace AnBTech.RestAPI
+                             //emp.project.endDate = DateTime.Now;
+ 
+ 
+-                            ANBTX.Update(API_URL, TokenInfo.access_token, emp);
++                            ANBTX.Update(API_URL, emp);
+                         }
+                     }
+                 }
+@@ -142,11 +142,11 @@ namespace AnBTech.RestAPI
+ 		/// </summary>
+ 		/// <param name="strAPI"></param>
+ 		/// <returns></returns>
+-		public List<EmployeeVO> GetEmployee(string strAPI, string token)
++		public List<EmployeeVO> GetEmployee(string strAPI)
+ 		{
+ 			var lstEmployee = new List<EmployeeVO>();
+ 
+-			var response = ANBTX.Get(strAPI, token);
++			var response = ANBTX.Get(strAPI);
+ 
+ 			if (response.IsSuccessStatusCode)
+ 			{
+diff --git a/Source/WinRestAPITest/FrmRestAPILogin.cs b/Source/WinRestAPITest/FrmRestAPILogin.cs
+index 8cee77e..b2a91da 100644
+--- a/Source/WinRestAPITest/FrmRestAPILogin.cs
++++ b/Source/WinRestAPITest/FrmRestAPILogin.cs
+@@ -53,7 +53,8 @@ namespace AnBTech.RestAPI
+             };
+ 
+             string token = ANBTX.WebRequestCheck(BASE_URL[0]+BASE_SURV_URL[0], login);
+-
++            ANBTX.TokenValue(token);
++            
+             if (ANBTX.TokenValue(token) != null)
+             {
+                 var frmRestHome = new FrmRestAPITest();
+diff --git a/Source/WinRestAPITest/FrmRestAPITest.cs b/Source/WinRestAPITest/FrmRestAPITest.cs
+index 70904a3..68fc658 100644
+--- a/Source/WinRestAPITest/FrmRestAPITest.cs
++++ b/Source/WinRestAPITest/FrmRestAPITest.cs
+@@ -28,7 +28,7 @@ namespace AnBTech.RestAPI
+         // Create
+         private void btnCreate_Click(object sender, EventArgs e)
+ 		{
+-            Console.WriteLine(TokenInfo.access_token);
++            Console.WriteLine(TokenInfo);
+ 			var currentDate = DateTime.Now.ToLongDateString();
+ 			// creat
+ 			var emp = new EmployeeVO()
+@@ -88,7 +88,7 @@ namespace AnBTech.RestAPI
+ 				prjInfo = null
+ 			};
+ 
+-			ANBTX.Create(API_URL, TokenInfo.access_token, emp);
++			ANBTX.Create(API_URL, emp);
+ 		}
+ 
+ 
+@@ -104,7 +104,7 @@ namespace AnBTech.RestAPI
+             try
+ 			{
+                 
+-				var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token.ToString());
++				var lstEmployee = GetEmployee(API_URL);
+ 
+ 				if (lstEmployee == null || lstEmployee.Count == 0)
+ 				{
+@@ -129,11 +129,11 @@ namespace AnBTech.RestAPI
+ 		/// </summary>
+ 		/// <param name="strAPI"></param>
+ 		/// <returns></returns>
+-		public List<EmployeeVO> GetEmployee(string strAPI, string tokenInfo)
++		public List<EmployeeVO> GetEmployee(string strAPI)
+ 		{
+ 			var lstEmployee = new List<EmployeeVO>();
+ 
+-			var response = ANBTX.Get(strAPI, tokenInfo);
++			var response = ANBTX.Get(strAPI);
+ 
+ 			if (response.IsSuccessStatusCode)
+ 			{
+@@ -150,14 +150,14 @@ namespace AnBTech.RestAPI
+ 		{
+ 
+ 			// update
+-			var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token);
++			var lstEmployee = GetEmployee(API_URL);
+ 
+ 			if (lstEmployee.Any(o=>o.empId.Equals(textBox3.Text)))
+ 			{
+ 				var emp = lstEmployee.Where(o => o.empId.Equals(textBox3.Text)).ToArray()[0];
+ 				emp.email = "updateTest!!!!!!!!!";
+ 
+-				ANBTX.Update(API_URL, TokenInfo.access_token, emp);
++				ANBTX.Update(API_URL, emp);
+ 			}
+ 			
+ 			// 이렇게 하고 업데이트하니 에러발생. 
+@@ -176,7 +176,7 @@ namespace AnBTech.RestAPI
+ 		private void btnDelete_Click(object sender, EventArgs e)
+ 		{
+ 			// delete
+-			ANBTX.Delete(API_URL, TokenInfo.access_token, textBox4.Text);
++			ANBTX.Delete(API_URL, textBox4.Text);
+ 			btnRead_Click(null, null);
+ 		}
+ 
+@@ -211,7 +211,7 @@ namespace AnBTech.RestAPI
+ 
+         private void FrmRestAPITest_Load(object sender, EventArgs e)
+         {
+-            Console.WriteLine(TokenInfo.access_token);
++            Console.WriteLine(TokenInfo);
+         }
+     }
+ }
+diff --git a/Source/WinRestAPITest/VO/EmployeeVO.cs b/Source/WinRestAPITest/VO/EmployeeVO.cs
+index 8381cb0..6a956e0 100644
+--- a/Source/WinRestAPITest/VO/EmployeeVO.cs
++++ b/Source/WinRestAPITest/VO/EmployeeVO.cs
+@@ -9,7 +9,6 @@ namespace AnBTech.RestAPI
+ 	[Serializable]
+ 	public class EmployeeVO
+ 	{
+-        public string grant_type = "password";
+ 		public string birthDate;
+ 		public string birthState;
+ 		public string depart;
+diff --git a/Source/WinRestAPITest/VO/HolidayVO.cs b/Source/WinRestAPITest/VO/HolidayVO.cs
+index 4b9e9c8..01553f9 100644
+--- a/Source/WinRestAPITest/VO/HolidayVO.cs
++++ b/Source/WinRestAPITest/VO/HolidayVO.cs
+@@ -12,7 +12,6 @@ namespace AnBTech.RestAPI.VO
+ 	[Serializable]
+     public class HolidayVO
+     {
+-        public string grant_type = "password";
+         public string app1Date;
+         public string app1EmpId;
+         public string app1EmpNm;
+diff --git a/Source/WinRestAPITest/VO/ProjectVO.cs b/Source/WinRestAPITest/VO/ProjectVO.cs
+index 1f570c7..ce7878c 100644
+--- a/Source/WinRestAPITest/VO/ProjectVO.cs
++++ b/Source/WinRestAPITest/VO/ProjectVO.cs
+@@ -12,7 +12,6 @@ namespace AnBTech.RestAPI
+ 	[Serializable]
+ 	public class ProjectVO
+ 	{
+-        public string grant_type = "password";
+         public string prjId;
+ 		public string prjNm;
+         public string prjStatus;
+diff --git a/Source/WinRestAPITest/VO/RankVO.cs b/Source/WinRestAPITest/VO/RankVO.cs
+index 03f6ba5..1a02774 100644
+--- a/Source/WinRestAPITest/VO/RankVO.cs
++++ b/Source/WinRestAPITest/VO/RankVO.cs
+@@ -7,7 +7,6 @@ namespace AnBTech.RestAPI
+ 	[Serializable]
+ 	public class RankVO
+ 	{
+-        public string grant_type = "password";
+         public string rankCode;
+ 		public string rankName;
+ 		public int rankOrder;
+diff --git a/Source/WinRestAPITest/WinRestAPI.csproj b/Source/WinRestAPITest/WinRestAPI.csproj
+index abe4638..8337068 100644
+--- a/Source/WinRestAPITest/WinRestAPI.csproj
++++ b/Source/WinRestAPITest/WinRestAPI.csproj
+@@ -48,6 +48,9 @@
+   </PropertyGroup>
+   <ItemGroup>
+     <Reference Include="Microsoft.VisualStudio.Services.WebApi, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
++    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
++      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
++    </Reference>
+     <Reference Include="System" />
+     <Reference Include="System.Core" />
+     <Reference Include="System.Net.Http" />
+@@ -165,6 +168,7 @@
+       <DependentUpon>Resources.resx</DependentUpon>
+       <DesignTime>True</DesignTime>
+     </Compile>
++    <None Include="packages.config" />
+     <None Include="Properties\Settings.settings">
+       <Generator>SettingsSingleFileGenerator</Generator>
+       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+diff --git a/Source/WinRestAPITest/bin/Debug/WinRestAPITest.exe.config b/Source/WinRestAPITest/bin/Debug/WinRestAPITest.exe.config
+index aa09dfb..9f11d71 100644
+--- a/Source/WinRestAPITest/bin/Debug/WinRestAPITest.exe.config
++++ b/Source/WinRestAPITest/bin/Debug/WinRestAPITest.exe.config
+@@ -1,10 +1,17 @@
+-﻿<?xml version="1.0" encoding="utf-8" ?>
++﻿<?xml version="1.0" encoding="utf-8"?>
+ <configuration>
+   <system.web>
+-    <sessionState cookieless="true"
+-                  regenerateExpiredSessionId="true" />
++    <sessionState cookieless="true" regenerateExpiredSessionId="true" />
+   </system.web>
+     <startup> 
+         <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
+     </startup>
++  <runtime>
++    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
++      <dependentAssembly>
++        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
++        <bindingRedirect oldVersion="0.0.0.0-10.0.0.0" newVersion="10.0.0.0" />
++      </dependentAssembly>
++    </assemblyBinding>
++  </runtime>
+ </configuration>
+\ No newline at end of file
+diff --git a/Source/WinRestAPITest/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache b/Source/WinRestAPITest/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+index 7e354aa..64da74d 100644
+Binary files a/Source/WinRestAPITest/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache and b/Source/WinRestAPITest/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache differ

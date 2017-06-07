@@ -42,7 +42,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstPrj = GetProject(API_URL_PRJ, TokenInfo.access_token);
+                var lstPrj = GetProject(API_URL_PRJ);
                 if (lstPrj == null || lstPrj.Count == 0)
                 {
                     MessageBox.Show("There is no data.");
@@ -60,7 +60,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstEmp = GetEmployee(API_URL_EMP, TokenInfo.access_token);
+                var lstEmp = GetEmployee(API_URL_EMP);
                 if (lstEmp == null || lstEmp.Count == 0)
                 {
                     MessageBox.Show("There is no data.");
@@ -80,11 +80,11 @@ namespace AnBTech.RestAPI
 		/// </summary>
 		/// <param name="strAPI"></param>
 		/// <returns></returns>
-		public List<EmployeeVO> GetEmployee(string strAPI, string token)
+		public List<EmployeeVO> GetEmployee(string strAPI)
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = ANBTX.Get(strAPI, token);
+			var response = ANBTX.Get(strAPI);
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -99,11 +99,11 @@ namespace AnBTech.RestAPI
 		/// </summary>
 		/// <param name="strAPI"></param>
 		/// <returns></returns>
-		public List<ProjectVO> GetProject(string strAPI, string token)
+		public List<ProjectVO> GetProject(string strAPI)
         {
             var lstProject = new List<ProjectVO>();
 
-            var response = ANBTX.Get(strAPI, token);
+            var response = ANBTX.Get(strAPI);
 
             if (response.IsSuccessStatusCode)
             {

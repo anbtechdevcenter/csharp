@@ -28,7 +28,7 @@ namespace AnBTech.RestAPI
         // Create
         private void btnCreate_Click(object sender, EventArgs e)
 		{
-            Console.WriteLine(TokenInfo.access_token);
+            Console.WriteLine(TokenInfo);
 			var currentDate = DateTime.Now.ToLongDateString();
 			// creat
 			var emp = new EmployeeVO()
@@ -88,7 +88,7 @@ namespace AnBTech.RestAPI
 				prjInfo = null
 			};
 
-			ANBTX.Create(API_URL, TokenInfo.access_token, emp);
+			ANBTX.Create(API_URL, emp);
 		}
 
 
@@ -104,7 +104,7 @@ namespace AnBTech.RestAPI
             try
 			{
                 
-				var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token.ToString());
+				var lstEmployee = GetEmployee(API_URL);
 
 				if (lstEmployee == null || lstEmployee.Count == 0)
 				{
@@ -129,11 +129,11 @@ namespace AnBTech.RestAPI
 		/// </summary>
 		/// <param name="strAPI"></param>
 		/// <returns></returns>
-		public List<EmployeeVO> GetEmployee(string strAPI, string tokenInfo)
+		public List<EmployeeVO> GetEmployee(string strAPI)
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = ANBTX.Get(strAPI, tokenInfo);
+			var response = ANBTX.Get(strAPI);
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -150,14 +150,14 @@ namespace AnBTech.RestAPI
 		{
 
 			// update
-			var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token);
+			var lstEmployee = GetEmployee(API_URL);
 
 			if (lstEmployee.Any(o=>o.empId.Equals(textBox3.Text)))
 			{
 				var emp = lstEmployee.Where(o => o.empId.Equals(textBox3.Text)).ToArray()[0];
 				emp.email = "updateTest!!!!!!!!!";
 
-				ANBTX.Update(API_URL, TokenInfo.access_token, emp);
+				ANBTX.Update(API_URL, emp);
 			}
 			
 			// 이렇게 하고 업데이트하니 에러발생. 
@@ -176,7 +176,7 @@ namespace AnBTech.RestAPI
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
 			// delete
-			ANBTX.Delete(API_URL, TokenInfo.access_token, textBox4.Text);
+			ANBTX.Delete(API_URL, textBox4.Text);
 			btnRead_Click(null, null);
 		}
 
@@ -211,7 +211,7 @@ namespace AnBTech.RestAPI
 
         private void FrmRestAPITest_Load(object sender, EventArgs e)
         {
-            Console.WriteLine(TokenInfo.access_token);
+            Console.WriteLine(TokenInfo);
         }
     }
 }

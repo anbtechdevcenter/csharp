@@ -37,7 +37,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstEmp = GetEmployee(API_URL_EMP, TokenInfo.access_token);
+                var lstEmp = GetEmployee(API_URL_EMP);
                 if (lstEmp == null || lstEmp.Count == 0)
                 {
                     MessageBox.Show("There is no data.");
@@ -105,7 +105,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstEmployee = GetEmployee(API_URL, TokenInfo.access_token);
+                var lstEmployee = GetEmployee(API_URL);
                 for (int i = 0; i < grdRpt.Rows.Count; i++)
                 {
                     var chk = grdRpt.Rows[i].Cells[1].FormattedValue.ToString();
@@ -124,7 +124,7 @@ namespace AnBTech.RestAPI
                             //emp.project.endDate = DateTime.Now;
 
 
-                            ANBTX.Update(API_URL, TokenInfo.access_token, emp);
+                            ANBTX.Update(API_URL, emp);
                         }
                     }
                 }
@@ -142,11 +142,11 @@ namespace AnBTech.RestAPI
 		/// </summary>
 		/// <param name="strAPI"></param>
 		/// <returns></returns>
-		public List<EmployeeVO> GetEmployee(string strAPI, string token)
+		public List<EmployeeVO> GetEmployee(string strAPI)
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = ANBTX.Get(strAPI, token);
+			var response = ANBTX.Get(strAPI);
 
 			if (response.IsSuccessStatusCode)
 			{

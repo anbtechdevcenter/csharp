@@ -53,7 +53,8 @@ namespace AnBTech.RestAPI
             };
 
             string token = ANBTX.WebRequestCheck(BASE_URL[0]+BASE_SURV_URL[0], login);
-
+            ANBTX.TokenValue(token);
+            
             if (ANBTX.TokenValue(token) != null)
             {
                 var frmRestHome = new FrmRestAPITest();

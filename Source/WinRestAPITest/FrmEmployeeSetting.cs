@@ -228,7 +228,7 @@ namespace AnBTech.RestAPI
             UpdateEmployee.maritalDate = employeeMarital_date.Value.ToUniversalTime().ToString("s") + "Z";
             UpdateEmployee.leaveDate = cboEmployeeLeaveType.SelectedItem.ToString() != "퇴사" ? employeeLeaveDate.Value.ToUniversalTime().ToString("s") + "Z" : " ";
 
-            ANBTX.Update("/api/employee", TokenInfo.access_token, UpdateEmployee);
+            ANBTX.Update("/api/employee", UpdateEmployee);
 
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
@@ -286,7 +286,7 @@ namespace AnBTech.RestAPI
                 prjInfo = null
             };
 
-            ANBTX.Create("/api/employee", TokenInfo.access_token, emp);
+            ANBTX.Create("/api/employee", emp);
 
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();

@@ -45,11 +45,11 @@ namespace AnBTech.RestAPI
         private void InitControl()
         {
             //공통 코드 ( 근무지역 초기화 )
-            _lstCodeCommon = GetCodeCommon(API_CODE_COMMON_URL, TokenInfo.access_token);
+            _lstCodeCommon = GetCodeCommon(API_CODE_COMMON_URL);
             MessageBox.Show(TokenInfo.access_token);
 
             // 직원이름 초기화.
-            _lstEmployeeTotal = GetEmployee(API_EMPLOYEE_URL, TokenInfo.access_token);
+            _lstEmployeeTotal = GetEmployee(API_EMPLOYEE_URL);
             var lstEmpName = _lstEmployeeTotal.Select(o => o.empNm).ToList().Where(o => !string.IsNullOrEmpty(o)).ToList();
             this.SetComboBox(cboEmployeeName, lstEmpName);
 
@@ -60,13 +60,13 @@ namespace AnBTech.RestAPI
 
 
             // 프로젝트명 초기화.
-            _lstProject = GetProject(API_PROJECT_URL, TokenInfo.access_token);
+            _lstProject = GetProject(API_PROJECT_URL);
             var lstProject = _lstProject.Select(o => o.prjNm).Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
             this.SetComboBox(cboProjectName, lstProject);
 
 
             // 직급 초기화.
-            _lstRank = GetRank(API_RANK_URL, TokenInfo.access_token);
+            _lstRank = GetRank(API_RANK_URL);
             var lstRank = _lstRank.Select(o => o.rankName).ToList();
             this.SetComboBox(cboRank, lstRank);
 
@@ -98,11 +98,11 @@ namespace AnBTech.RestAPI
         /// </summary>
         /// 
         /// <returns></returns>
-        public List<CommonCodeVO> GetCodeCommon(string strAPI, string token)
+        public List<CommonCodeVO> GetCodeCommon(string strAPI)
         {
             var lstCodeCommon = new List<CommonCodeVO>();
 
-            var response = ANBTX.Get(strAPI, token);
+            var response = ANBTX.Get(strAPI);
 
             if (response.IsSuccessStatusCode)
             {
@@ -117,11 +117,11 @@ namespace AnBTech.RestAPI
         /// </summary>
         /// <param name="strAPI"></param>
         /// <returns></returns>
-        public List<EmployeeVO> GetEmployee(string strAPI, string token)
+        public List<EmployeeVO> GetEmployee(string strAPI)
         {
             var lstEmployee = new List<EmployeeVO>();
 
-            var response = ANBTX.Get(strAPI, token);
+            var response = ANBTX.Get(strAPI);
 
             if (response.IsSuccessStatusCode)
             {
@@ -136,11 +136,11 @@ namespace AnBTech.RestAPI
         /// </summary>
         /// <param name="strAPI"></param>
         /// <returns></returns>
-        public List<RankVO> GetRank(string strAPI, string token)
+        public List<RankVO> GetRank(string strAPI)
         {
             var lstObject = new List<RankVO>();
 
-            var response = ANBTX.Get(strAPI, token);
+            var response = ANBTX.Get(strAPI);
 
             if (response.IsSuccessStatusCode)
             {
@@ -155,11 +155,11 @@ namespace AnBTech.RestAPI
         /// </summary>
         /// <param name="strAPI"></param>
         /// <returns></returns>
-        public List<ProjectVO> GetProject(string strAPI, string token)
+        public List<ProjectVO> GetProject(string strAPI)
         {
             var lstProject = new List<ProjectVO>();
 
-            var response = ANBTX.Get(strAPI, token);
+            var response = ANBTX.Get(strAPI);
 
             if (response.IsSuccessStatusCode)
             {
@@ -377,7 +377,7 @@ namespace AnBTech.RestAPI
 
             if (MessageBox.Show(string.Format("이름 : {0}, 직급 : {1} \r\n 삭제하시겠습니까?", emp.empNm, emp.rank.rankName), string.Empty, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.OK)
             {
-                ANBTX.Delete(API_EMPLOYEE_URL, TokenInfo.access_token, empId);
+                ANBTX.Delete(API_EMPLOYEE_URL, empId);
                 InitControl();
                 btnSearch_Click(null, null);
             }

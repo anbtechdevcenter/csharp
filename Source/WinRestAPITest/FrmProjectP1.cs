@@ -63,11 +63,11 @@ namespace AnBTech.RestAPI
         /// </summary>
         /// <param name="strAPI"></param>
         /// <returns></returns>
-        public List<EmployeeVO> GetEmployee(string strAPI, string token)
+        public List<EmployeeVO> GetEmployee(string strAPI)
 		{
 			var lstEmployee = new List<EmployeeVO>();
 
-			var response = ANBTX.Get(strAPI, token);
+			var response = ANBTX.Get(strAPI);
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -87,7 +87,7 @@ namespace AnBTech.RestAPI
                 };
                 if(edPrjId.Text != null)
                 {
-                    ANBTX.Delete(API_URL, TokenInfo.access_token, prjId);
+                    ANBTX.Delete(API_URL, prjId);
                     MessageBox.Show("성공적으로 삭제되었습니다.");
                 }
                 else
@@ -117,11 +117,11 @@ namespace AnBTech.RestAPI
 
                 if (edPrjId.Text.Length > 0)
                 {
-                    ANBTX.Update(API_URL, TokenInfo.access_token, prj);
+                    ANBTX.Update(API_URL, prj);
                 }
                 else
                 {
-                    ANBTX.Create(API_URL, TokenInfo.access_token, prj);
+                    ANBTX.Create(API_URL, prj);
                 }
             }
             catch (Exception ex)

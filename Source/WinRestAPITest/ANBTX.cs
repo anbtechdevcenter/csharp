@@ -16,20 +16,19 @@ namespace AnBTech.RestAPI
     {
 
         static HttpClient _client;
+        public static AccessTokenVO tokenInfos;
 
-        public static AccessTokenVO tokenInfos { internal get; set; }
         public static string accessTokenHold;
         /// <summary>
         /// Connection 객체를 생성합니다.
         /// </summary>
-        static void Connect()
+        static void Connect(string tokenInfo)
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://restnfeel.com:8080/");
             _client.DefaultRequestHeaders.Accept.Clear();
-            _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            _client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenInfos.access_token.ToString());
+            _client.DefaultRequestHeaders.Add("Accept", "application/json");
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenInfo);
         }
 
         /// <summary>
@@ -49,7 +48,7 @@ namespace AnBTech.RestAPI
         /// <returns></returns>
         public static HttpResponseMessage Get(string strAPI)
         {
-            if (_client == null) Connect();
+            if (_client == null) Connect(accessTokenHold);
             return _client.GetAsync(strAPI).Result;
         }
 
@@ -60,7 +59,7 @@ namespace AnBTech.RestAPI
         /// <param name="inputVo"> 함수에 입력 할 VO 객체</param>
         public static void Create(string strAPI, object inputVO)
         {
-            if (_client == null) Connect();
+            if (_client == null) Connect(accessTokenHold);
             HttpResponseMessage response = _client.PostAsJsonAsync(strAPI, inputVO).Result;
             response.EnsureSuccessStatusCode();
         }
@@ -72,7 +71,7 @@ namespace AnBTech.RestAPI
         /// <param name="inputVo"> 함수에 입력 할 VO 객체</param>
         public static HttpResponseMessage Update(string strAPI, object inputVO)
         {
-            if (_client == null) Connect();
+            if (_client == null) Connect(accessTokenHold);
             return PatchAsJsonAsync(_client, strAPI, inputVO);
         }
 
@@ -92,7 +91,7 @@ namespace AnBTech.RestAPI
         /// <returns></returns>
         public static HttpStatusCode Delete(string strAPI, string id)
         {
-            if (_client == null) Connect();
+            if (_client == null) Connect(accessTokenHold);
 
             HttpResponseMessage response = _client.DeleteAsync(string.Format("{0}/{1}", strAPI, id)).Result;
 
@@ -101,27 +100,6 @@ namespace AnBTech.RestAPI
 
         //로그인
         // 운영으로 들어갈 경우를 위해 URL을 남겨둠
-        static HttpClient loginAccess;
-        //static HttpWebRequest loginCheck;
-
-        public static void MainAsync(string strAPI, LoginVO checkInfo)
-        {
-            loginAccess = new HttpClient();
-            loginAccess.BaseAddress = new Uri("http://restnfeel.com:8080");
-            loginAccess.DefaultRequestHeaders.Add("Accept", "application/json");
-            loginAccess.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", "YW5iZGV2Y2VudGVyLWNsaWVudC13aXRoLXNlY3JldDpkZXZjZW50ZXI=");
-            var content = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("grant_type",checkInfo.grant_type),
-                new KeyValuePair<string, string>("username",checkInfo.email),
-                new KeyValuePair<string, string>("password",checkInfo.password)
-            });
-            var request = new HttpRequestMessage(new HttpMethod("POST"), strAPI) { Content = content };
-            var result = loginAccess.SendAsync(request).Result;
-            //var result2 = loginAccess.SendAsync(request).AsyncState;
-            Console.WriteLine(result);
-            //Console.WriteLine(result2);
-        }
 
         public static string WebRequestCheck(String strAPI, LoginVO check)
         {
@@ -155,13 +133,21 @@ namespace AnBTech.RestAPI
                 char[] TokenCheck = { ',' };
                 string[] accessTokenCheck = token.Split(TokenCheck);
                 string[] tokenSplit = accessTokenCheck[0].Split(':');
-                tokenInfos.access_token = tokenSplit[1].Split('"')[1];
+                TokenSet(tokenSplit[1].Split('"')[1]);
                 return tokenSplit[1].Split('"')[1];
             }
             catch
             {
                 return null;
             }
+        }
+        
+        public static String TokenSet(string tokenVal)
+        {
+            
+            accessTokenHold = Newtonsoft.Json.JsonConvert.SerializeObject(tokenVal);
+            Console.WriteLine(accessTokenHold);
+            return accessTokenHold;
         }
     }
 }

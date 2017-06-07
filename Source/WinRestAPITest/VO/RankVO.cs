@@ -7,7 +7,6 @@ namespace AnBTech.RestAPI
 	[Serializable]
 	public class RankVO
 	{
-        public string grant_type = "password";
         public string rankCode;
 		public string rankName;
 		public int rankOrder;
