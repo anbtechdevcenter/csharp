@@ -68,9 +68,11 @@ namespace AnBTech.RestAPI
         /// <param name="inputVo"> 함수에 입력 할 VO 객체</param>
         public static void Create(string strAPI, object inputVO)
         {
-            if (_client == null) Connect(accessTokenHold);
-            HttpResponseMessage response = _client.PostAsJsonAsync(strAPI, inputVO).Result;
+            //if (_client == null) Connect(accessTokenHold);
+            HttpResponseMessage response = _client.PostAsJsonAsync(strAPI, inputVO).Result;            
             response.EnsureSuccessStatusCode();
+
+            
         }
 
         /// <summary>
