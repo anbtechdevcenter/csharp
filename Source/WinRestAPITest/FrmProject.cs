@@ -30,7 +30,6 @@ namespace AnBTech.RestAPI
         public static string prjendDt = null;
         public static string prjstartDt = null;
         public static string prjStatus = null;
-        public static AccessTokenVO TokenInfo { internal get; set; }
 
         private void InitControl()
         {

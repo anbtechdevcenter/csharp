@@ -72,8 +72,6 @@ namespace AnBTech.RestAPI
             char[] TokenCheck = { ',' };
             string[] accessTokenCheck = token.Split(TokenCheck);
             string[] tokenSplit = accessTokenCheck[0].Split(':');
-            AccessTokenVO at = new AccessTokenVO();
-            at.access_token = tokenSplit[1];
             return tokenSplit[1];
         }
 

@@ -9,6 +9,7 @@ namespace AnBTech.RestAPI
 	[Serializable]
 	public class EmployeeVO
 	{
+        public string grant_type = "password"; // 고정값
         public string birthDate;
 		public string birthState;
 		public string depart;

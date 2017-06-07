@@ -12,6 +12,7 @@ namespace AnBTech.RestAPI
 	[Serializable]
 	public class ProjectVO
 	{
+        public string grant_type = "password"; // 고정값
         public string prjId;
 		public string prjNm;
         public string prjStatus;

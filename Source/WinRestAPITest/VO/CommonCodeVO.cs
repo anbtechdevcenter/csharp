@@ -12,6 +12,7 @@ namespace AnBTech.RestAPI.VO
 	[Serializable]
     public class CommonCodeVO
     {
+        public string grant_type = "password"; // 고정값
         public string seqCode;
         public string codeType;
         public string codeId;

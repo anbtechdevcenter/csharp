@@ -24,8 +24,6 @@ namespace AnBTech.RestAPI
 
         public static string prjId = null;
 
-        public static AccessTokenVO TokenInfo { internal get; set; }
-
         string API_URL = "/api/project";
 
         public void InitControl()

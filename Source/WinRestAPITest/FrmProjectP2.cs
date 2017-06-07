@@ -26,8 +26,6 @@ namespace AnBTech.RestAPI
 		string API_URL = "/api/employee";
         string API_URL_EMP = "/api/employee";
 
-        public static AccessTokenVO TokenInfo { internal get; set; }
-
         private void InitControl()
         {
             commGetEmp();

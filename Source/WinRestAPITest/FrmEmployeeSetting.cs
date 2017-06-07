@@ -24,7 +24,6 @@ namespace AnBTech.RestAPI
         public List<string> TeamInfo { internal get; set; }
         public List<ProjectVO> ProjectInfo { internal get; set; }
         public List<CommonCodeVO> CodeInfo { internal get; set; }
-        public static AccessTokenVO TokenInfo { internal get; set; }
 
 
         private void FrmEmployeeSetting_Load(object sender, EventArgs e)
@@ -211,6 +210,7 @@ namespace AnBTech.RestAPI
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            UpdateEmployee.grant_type = "password";
             UpdateEmployee.empNm = txtEmployeeName.Text;
             UpdateEmployee.empEngNm = txtEmployeeEngName.Text;
             UpdateEmployee.rank = RankInfo.Where(o => o.rankName.Equals(cboRank.Text)).First();

@@ -16,7 +16,6 @@ namespace AnBTech.RestAPI
     {
 
         static HttpClient _client;
-        public static AccessTokenVO tokenInfos;
 
         public static string accessTokenHold;
         public static string notConvertaccessTokenHold;

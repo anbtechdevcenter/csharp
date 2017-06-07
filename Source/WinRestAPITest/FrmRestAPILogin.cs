@@ -28,7 +28,6 @@ namespace AnBTech.RestAPI
         readonly string[] BASE_SURV_URL = { "/api/oauth/token", "/token" };
 
         public LoginVO loginInfo { internal get; set; }
-        public static AccessTokenVO TokenInfo { internal get; set; }
         public CookieContainer loginCookie = new CookieContainer();
 
         private void button1_Click(object sender, EventArgs e)
