@@ -17,8 +17,11 @@ namespace AnBTech.RestAPI
 
         static HttpClient _client;
         public static AccessTokenVO tokenInfos;
+        static HttpWebRequest GetList;
+        static HttpWebRequest CreateVal;
 
         public static string accessTokenHold;
+        public static string notConvertaccessTokenHold;
         /// <summary>
         /// Connection 객체를 생성합니다.
         /// </summary>
@@ -26,9 +29,8 @@ namespace AnBTech.RestAPI
         {
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://restnfeel.com:8080/");
-            _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Add("Accept", "application/json");
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenInfo);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", notConvertaccessTokenHold);
         }
 
         /// <summary>
@@ -49,7 +51,14 @@ namespace AnBTech.RestAPI
         public static HttpResponseMessage Get(string strAPI)
         {
             if (_client == null) Connect(accessTokenHold);
+            Console.WriteLine(_client.DefaultRequestHeaders.Accept.ToString());
+            Console.WriteLine(_client.GetAsync(strAPI).Result.ToString());
             return _client.GetAsync(strAPI).Result;
+        }
+
+        public static HttpWebResponse GetListView()
+        {
+            return null;
         }
 
         /// <summary>
@@ -114,7 +123,7 @@ namespace AnBTech.RestAPI
             loginCheck.Accept = "application/json";
             loginCheck.Headers.Add(HttpRequestHeader.Authorization, "Basic YW5iZGV2Y2VudGVyLWNsaWVudC13aXRoLXNlY3JldDpkZXZjZW50ZXI=");
             loginCheck.ContentType = "application/x-www-form-urlencoded";
-
+            
             Stream stDataParams = loginCheck.GetRequestStream();
             stDataParams.Write(byteDataParams, 0, byteDataParams.Length);
             stDataParams.Close();
@@ -144,7 +153,7 @@ namespace AnBTech.RestAPI
         
         public static String TokenSet(string tokenVal)
         {
-            
+            notConvertaccessTokenHold = tokenVal;
             accessTokenHold = Newtonsoft.Json.JsonConvert.SerializeObject(tokenVal);
             Console.WriteLine(accessTokenHold);
             return accessTokenHold;

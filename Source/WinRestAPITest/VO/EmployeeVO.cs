@@ -9,7 +9,8 @@ namespace AnBTech.RestAPI
 	[Serializable]
 	public class EmployeeVO
 	{
-		public string birthDate;
+        internal string grant_type;
+        public string birthDate;
 		public string birthState;
 		public string depart;
 		public string email;
@@ -45,7 +46,6 @@ namespace AnBTech.RestAPI
 		public string updateDate;
 		public string userInfo;
 		public string workPosition;
-
-	}
+    }
 
 }

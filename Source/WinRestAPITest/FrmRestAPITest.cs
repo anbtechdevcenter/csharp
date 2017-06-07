@@ -23,16 +23,15 @@ namespace AnBTech.RestAPI
 		}
  
 		string API_URL = "/api/employee";
-        public static AccessTokenVO TokenInfo { internal get; set; }
 
         // Create
         private void btnCreate_Click(object sender, EventArgs e)
 		{
-            Console.WriteLine(TokenInfo);
 			var currentDate = DateTime.Now.ToLongDateString();
 			// creat
 			var emp = new EmployeeVO()
 			{
+                grant_type = "password",
 				empId = "",// 이거는 입력해도 의미 없음
 				birthDate = null,
 				birthState = null,
@@ -134,7 +133,7 @@ namespace AnBTech.RestAPI
 			var lstEmployee = new List<EmployeeVO>();
 
 			var response = ANBTX.Get(strAPI);
-
+            
 			if (response.IsSuccessStatusCode)
 			{
 				lstEmployee = response.Content.ReadAsAsync<List<EmployeeVO>>().Result;
@@ -144,9 +143,9 @@ namespace AnBTech.RestAPI
 		}
 
 
-		#endregion
-		
-		private void btnUpdate_Click(object sender, EventArgs e)
+        #endregion
+
+        private void btnUpdate_Click(object sender, EventArgs e)
 		{
 
 			// update
@@ -211,7 +210,7 @@ namespace AnBTech.RestAPI
 
         private void FrmRestAPITest_Load(object sender, EventArgs e)
         {
-            Console.WriteLine(TokenInfo);
+            
         }
     }
 }

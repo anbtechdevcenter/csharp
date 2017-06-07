@@ -12,6 +12,7 @@ namespace AnBTech.RestAPI
 	[Serializable]
 	public class ProjectVO
 	{
+        internal string grant_type;
         public string prjId;
 		public string prjNm;
         public string prjStatus;
