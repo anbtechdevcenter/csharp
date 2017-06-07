@@ -31,7 +31,6 @@ namespace AnBTech.RestAPI
 			// creat
 			var emp = new EmployeeVO()
 			{
-                grant_type = "password",
 				empId = "",// 이거는 입력해도 의미 없음
 				birthDate = null,
 				birthState = null,

@@ -17,8 +17,6 @@ namespace AnBTech.RestAPI
 
         static HttpClient _client;
         public static AccessTokenVO tokenInfos;
-        static HttpWebRequest GetList;
-        static HttpWebRequest CreateVal;
 
         public static string accessTokenHold;
         public static string notConvertaccessTokenHold;
@@ -27,10 +25,11 @@ namespace AnBTech.RestAPI
         /// </summary>
         static void Connect(string tokenInfo)
         {
+            Console.WriteLine(tokenInfo);
             _client = new HttpClient();
             _client.BaseAddress = new Uri("http://restnfeel.com:8080/");
             _client.DefaultRequestHeaders.Add("Accept", "application/json");
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", notConvertaccessTokenHold);
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenInfo);
         }
 
         /// <summary>
@@ -50,9 +49,7 @@ namespace AnBTech.RestAPI
         /// <returns></returns>
         public static HttpResponseMessage Get(string strAPI)
         {
-            if (_client == null) Connect(accessTokenHold);
-            Console.WriteLine(_client.DefaultRequestHeaders.Accept.ToString());
-            Console.WriteLine(_client.GetAsync(strAPI).Result.ToString());
+            if (_client == null) Connect(notConvertaccessTokenHold);
             return _client.GetAsync(strAPI).Result;
         }
 
@@ -68,8 +65,10 @@ namespace AnBTech.RestAPI
         /// <param name="inputVo"> 함수에 입력 할 VO 객체</param>
         public static void Create(string strAPI, object inputVO)
         {
-            //if (_client == null) Connect(accessTokenHold);
-            HttpResponseMessage response = _client.PostAsJsonAsync(strAPI, inputVO).Result;            
+
+            if (_client == null) Connect(notConvertaccessTokenHold);
+            HttpResponseMessage response = _client.PostAsJsonAsync(strAPI, inputVO).Result;
+
             response.EnsureSuccessStatusCode();
 
             
@@ -82,7 +81,7 @@ namespace AnBTech.RestAPI
         /// <param name="inputVo"> 함수에 입력 할 VO 객체</param>
         public static HttpResponseMessage Update(string strAPI, object inputVO)
         {
-            if (_client == null) Connect(accessTokenHold);
+            if (_client == null) Connect(notConvertaccessTokenHold);
             return PatchAsJsonAsync(_client, strAPI, inputVO);
         }
 
@@ -102,7 +101,7 @@ namespace AnBTech.RestAPI
         /// <returns></returns>
         public static HttpStatusCode Delete(string strAPI, string id)
         {
-            if (_client == null) Connect(accessTokenHold);
+            if (_client == null) Connect(notConvertaccessTokenHold);
 
             HttpResponseMessage response = _client.DeleteAsync(string.Format("{0}/{1}", strAPI, id)).Result;
 
@@ -157,7 +156,6 @@ namespace AnBTech.RestAPI
         {
             notConvertaccessTokenHold = tokenVal;
             accessTokenHold = Newtonsoft.Json.JsonConvert.SerializeObject(tokenVal);
-            Console.WriteLine(accessTokenHold);
             return accessTokenHold;
         }
     }

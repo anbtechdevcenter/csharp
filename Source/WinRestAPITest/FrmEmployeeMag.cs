@@ -34,7 +34,6 @@ namespace AnBTech.RestAPI
         List<ProjectVO> _lstProject;
         List<string> _lstTeam;
         List<CommonCodeVO> _lstCodeCommon;
-        public static AccessTokenVO TokenInfo { internal get; set; }
 
 
         private void FrmEmployeeMag_Load(object sender, EventArgs e)
@@ -46,7 +45,6 @@ namespace AnBTech.RestAPI
         {
             //공통 코드 ( 근무지역 초기화 )
             _lstCodeCommon = GetCodeCommon(API_CODE_COMMON_URL);
-            MessageBox.Show(TokenInfo.access_token);
 
             // 직원이름 초기화.
             _lstEmployeeTotal = GetEmployee(API_EMPLOYEE_URL);
@@ -237,7 +235,7 @@ namespace AnBTech.RestAPI
             var lstDateFilter = new List<string>();
 
             lstDateFilter.AddRange(_lstEmployeeTotal
-                 .Where(o => o.empFlag != null )
+                 .Where(o => o.empNm != null )
                  .Select(o => o.empId).ToList());
 
             lstlstEmpId.Add(lstDateFilter);
