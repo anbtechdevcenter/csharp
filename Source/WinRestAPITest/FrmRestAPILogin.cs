@@ -61,10 +61,5 @@ namespace AnBTech.RestAPI
                 this.Close();
             }
         }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(txtLoginPassword.Text);
-        }
     }
 }

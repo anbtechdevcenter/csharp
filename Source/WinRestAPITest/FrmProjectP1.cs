@@ -56,25 +56,6 @@ namespace AnBTech.RestAPI
             }
         }
         
-        /// <summary>
-        /// Employee 항목을 가져옵니다.
-        /// </summary>
-        /// <param name="strAPI"></param>
-        /// <returns></returns>
-        public List<EmployeeVO> GetEmployee(string strAPI)
-		{
-			var lstEmployee = new List<EmployeeVO>();
-
-			var response = ANBTX.Get(strAPI);
-
-			if (response.IsSuccessStatusCode)
-			{
-				lstEmployee = response.Content.ReadAsAsync<List<EmployeeVO>>().Result;
-			}
-
-			return lstEmployee;
-		}
-        
         private void btnAdd_Click(object sender, EventArgs e)
         {
             try

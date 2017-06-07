@@ -109,9 +109,9 @@ namespace AnBTech.RestAPI
         public static string WebRequestCheck(String strAPI, LoginVO check)
         {
             StringBuilder dataParam = new StringBuilder();
-            dataParam.Append("grant_type=" + check.grant_type);
-            dataParam.Append("&username=" + check.email);
-            dataParam.Append("&password=" + check.password);
+            dataParam.Append("grant_type=" + check.grant_type.ToString());
+            dataParam.Append("&username=" + check.email.ToString());
+            dataParam.Append("&password=" + check.password.ToString());
             byte[] byteDataParams = UTF8Encoding.UTF8.GetBytes(dataParam.ToString());
 
             HttpWebRequest loginCheck = (HttpWebRequest)WebRequest.Create(strAPI);
