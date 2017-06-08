@@ -201,6 +201,7 @@
             this.Controls.Add(this.tabMainMenu);
             this.Name = "FrmMainViewList";
             this.Text = "ANBTECH";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMainViewList_FormClosed);
             this.Load += new System.EventHandler(this.FrmMainViewList_Load);
             this.tabMainMenu.ResumeLayout(false);
             this.tabStafe.ResumeLayout(false);

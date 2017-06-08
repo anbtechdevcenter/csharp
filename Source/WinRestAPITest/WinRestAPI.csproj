@@ -128,6 +128,7 @@
     <Compile Include="FrmProjectP2.designer.cs">
       <DependentUpon>FrmProjectP2.cs</DependentUpon>
     </Compile>
+    <Compile Include="STAFF\class_staff_management.cs" />
     <Compile Include="VO\CommonCodeVO.cs" />
     <Compile Include="VO\HolidayVO.cs" />
     <Compile Include="VO\RankVO.cs" />

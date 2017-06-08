@@ -62,6 +62,8 @@ namespace AnBTech.RestAPI
 
                 var frmMainViewList = new FrmMainViewList();
                 frmMainViewList.Show();
+                this.Hide();
+                
                 
             }
         }

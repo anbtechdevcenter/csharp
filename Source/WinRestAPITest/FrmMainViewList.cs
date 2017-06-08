@@ -8,10 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace AnBTech.RestAPI
 {
     public partial class FrmMainViewList : Form
     {
+        class_staff_management m_hstaff_management;
         public FrmMainViewList()
         {
             InitializeComponent();
@@ -19,18 +21,6 @@ namespace AnBTech.RestAPI
 
         public void AddListColumns()
         {
-            //직원관리 Columns
-            listStaffView.Columns.Add("선택");
-            listStaffView.Columns.Add("No");
-            listStaffView.Columns.Add("이름");
-            listStaffView.Columns.Add("직급");
-            listStaffView.Columns.Add("소속팀");
-            listStaffView.Columns.Add("E-Mail");
-            listStaffView.Columns.Add("진행프로젝트");
-            listStaffView.Columns.Add("입사일");
-            listStaffView.Columns.Add("근무지역");
-            listStaffView.Columns.Add("직원유형");
-
             //근태관리 Colums
             listWorkView.Columns.Add("선택");
             listWorkView.Columns.Add("No.");
@@ -50,44 +40,10 @@ namespace AnBTech.RestAPI
             listWorkView.Columns.Add("결재명");
         }
 
-        public void ReadStaffMagementListItem()
-        {
-            string API_URL = "/api/employee";
-
-            try
-            {
-
-                var lstEmployee = ANBTX_Common.GetEmployee(API_URL);
-                
-                if (lstEmployee == null || lstEmployee.Count == 0)
-                {
-                    MessageBox.Show("Employee Read Result : 0 \n\r");
-                    return;
-                }
-                
-                listStaffView.Clear();
-                AddListColumns();
-
-                int indexcount = 1;
-                foreach (var emp in lstEmployee)
-                {
-                    listStaffView.Items.Add(new ListViewItem(new string[]
-                    {
-                        "",indexcount.ToString(),emp.empNm,emp.rank.rankName,"디자인팀","mjkang@anbtech.co.kr","ANB New Project","2017-04-04", "이천","정직원"
-                    }));
-                    indexcount++;                
-                }               
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString() + "\n\r");
-            }
-        }
-        
-
         private void FrmMainViewList_Load(object sender, EventArgs e)
         {
-            AddListColumns();            
+            m_hstaff_management = new class_staff_management(listStaffView);
+            m_hstaff_management.ReadStaffMagementListItem();
         }
 
         private void tabSubMenu_SelectedIndexChanged(object sender, EventArgs e)
@@ -96,10 +52,14 @@ namespace AnBTech.RestAPI
             switch(selectIndex)
             {
                 case 0: //enum으로 변경
-                    ReadStaffMagementListItem();
+                    m_hstaff_management.ReadStaffMagementListItem();
                     break;
             }
             //MessageBox.Show(selectIndex.ToString()+"눌렸다 이놈아!!");
+        }
+
+        private void FrmMainViewList_FormClosed(object sender, FormClosedEventArgs e)
+        {
         }
     }
 }
