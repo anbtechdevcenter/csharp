@@ -30,7 +30,6 @@ namespace AnBTech.RestAPI
         public static string prjendDt = null;
         public static string prjstartDt = null;
         public static string prjStatus = null;
-        public static AccessTokenVO TokenInfo { internal get; set; }
 
         private void InitControl()
         {
@@ -42,7 +41,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstPrj = GetProject(API_URL_PRJ);
+                var lstPrj = ANBTX_Common.GetProject(API_URL_PRJ);
                 if (lstPrj == null || lstPrj.Count == 0)
                 {
                     MessageBox.Show("There is no data.");
@@ -60,7 +59,7 @@ namespace AnBTech.RestAPI
         {
             try
             {
-                var lstEmp = GetEmployee(API_URL_EMP);
+                var lstEmp = ANBTX_Common.GetEmployee(API_URL_EMP);
                 if (lstEmp == null || lstEmp.Count == 0)
                 {
                     MessageBox.Show("There is no data.");
@@ -73,44 +72,6 @@ namespace AnBTech.RestAPI
             {
                 MessageBox.Show("An exception occurred :" + ex.ToString());
             }
-        }
-
-        /// <summary>
-		/// Employee 항목을 가져옵니다.
-		/// </summary>
-		/// <param name="strAPI"></param>
-		/// <returns></returns>
-		public List<EmployeeVO> GetEmployee(string strAPI)
-		{
-			var lstEmployee = new List<EmployeeVO>();
-
-			var response = ANBTX.Get(strAPI);
-
-			if (response.IsSuccessStatusCode)
-			{
-				lstEmployee = response.Content.ReadAsAsync<List<EmployeeVO>>().Result;
-			}
-
-			return lstEmployee;
-		}
-
-        /// <summary>
-		/// Project 항목을 가져옵니다.
-		/// </summary>
-		/// <param name="strAPI"></param>
-		/// <returns></returns>
-		public List<ProjectVO> GetProject(string strAPI)
-        {
-            var lstProject = new List<ProjectVO>();
-
-            var response = ANBTX.Get(strAPI);
-
-            if (response.IsSuccessStatusCode)
-            {
-                lstProject = response.Content.ReadAsAsync<List<ProjectVO>>().Result;
-            }
-
-            return lstProject;
         }
         
         private void makeDt(List<ProjectVO> lstPrj)

@@ -35,7 +35,6 @@ namespace AnBTech.RestAPI
         List<string> _lstTeam;
         List<CommonCodeVO> _lstCodeCommon;
 
-
         private void FrmEmployeeMag_Load(object sender, EventArgs e)
         {
             InitControl();
@@ -44,127 +43,34 @@ namespace AnBTech.RestAPI
         private void InitControl()
         {
             //공통 코드 ( 근무지역 초기화 )
-            _lstCodeCommon = GetCodeCommon(API_CODE_COMMON_URL);
+            _lstCodeCommon = ANBTX_Common.GetCodeCommon(API_CODE_COMMON_URL);
 
             // 직원이름 초기화.
-            _lstEmployeeTotal = GetEmployee(API_EMPLOYEE_URL);
+            _lstEmployeeTotal = ANBTX_Common.GetEmployee(API_EMPLOYEE_URL);
             var lstEmpName = _lstEmployeeTotal.Select(o => o.empNm).ToList().Where(o => !string.IsNullOrEmpty(o)).ToList();
-            this.SetComboBox(cboEmployeeName, lstEmpName);
+            ANBTX_Common.SetComboBox(cboEmployeeName, lstEmpName);
 
 
             // 부서명 초기화.
             _lstTeam = _lstEmployeeTotal.Select(o => o.team).ToList().Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
-            this.SetComboBox(cboTeamName, _lstTeam);
+            ANBTX_Common.SetComboBox(cboTeamName, _lstTeam);
 
 
             // 프로젝트명 초기화.
-            _lstProject = GetProject(API_PROJECT_URL);
+            _lstProject = ANBTX_Common.GetProject(API_PROJECT_URL);
             var lstProject = _lstProject.Select(o => o.prjNm).Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
-            this.SetComboBox(cboProjectName, lstProject);
+            ANBTX_Common.SetComboBox(cboProjectName, lstProject);
 
 
             // 직급 초기화.
-            _lstRank = GetRank(API_RANK_URL);
+            _lstRank = ANBTX_Common.GetRank(API_RANK_URL);
             var lstRank = _lstRank.Select(o => o.rankName).ToList();
-            this.SetComboBox(cboRank, lstRank);
+            ANBTX_Common.SetComboBox(cboRank, lstRank);
 
 
             // 기간 초기화.
             this.dtpkFrom.Value = DateTime.Today.AddDays(-30); ;
             this.dtpkTo.Value = DateTime.Now;
-        }
-
-        /// <summary>
-        /// 지정된 콤보박스에 데이터를 입력합니다.
-        /// </summary>
-        /// <param name="combo"></param>
-        /// <param name="lstValue"></param>
-        /// <param name="isAscending"></param>
-        private void SetComboBox(ComboBox combo, List<string> lstValue, bool isAscending = true)
-        {
-            if (lstValue.Any())
-            {
-                lstValue.OrderBy(o => o);
-                combo.Items.Add("[None]");
-                combo.Items.AddRange(lstValue.ToArray());
-                combo.SelectedIndex = 0;
-            }
-        }
-
-        /// <summary>
-        /// 공통코드 항목을 가져옵니다.
-        /// </summary>
-        /// 
-        /// <returns></returns>
-        public List<CommonCodeVO> GetCodeCommon(string strAPI)
-        {
-            var lstCodeCommon = new List<CommonCodeVO>();
-
-            var response = ANBTX.Get(strAPI);
-
-            if (response.IsSuccessStatusCode)
-            {
-                lstCodeCommon = response.Content.ReadAsAsync<List<CommonCodeVO>>().Result;
-            }
-
-            return lstCodeCommon;
-        }
-
-        /// <summary>
-        /// Employee 항목을 가져옵니다.
-        /// </summary>
-        /// <param name="strAPI"></param>
-        /// <returns></returns>
-        public List<EmployeeVO> GetEmployee(string strAPI)
-        {
-            var lstEmployee = new List<EmployeeVO>();
-
-            var response = ANBTX.Get(strAPI);
-
-            if (response.IsSuccessStatusCode)
-            {
-                lstEmployee = response.Content.ReadAsAsync<List<EmployeeVO>>().Result;
-            }
-
-            return lstEmployee;
-        }
-
-        /// <summary>
-        /// Rank 항목을 가져옵니다.
-        /// </summary>
-        /// <param name="strAPI"></param>
-        /// <returns></returns>
-        public List<RankVO> GetRank(string strAPI)
-        {
-            var lstObject = new List<RankVO>();
-
-            var response = ANBTX.Get(strAPI);
-
-            if (response.IsSuccessStatusCode)
-            {
-                lstObject = response.Content.ReadAsAsync<List<RankVO>>().Result;
-            }
-
-            return lstObject;
-        }
-
-        /// <summary>
-        /// Project 항목을 가져옵니다.
-        /// </summary>
-        /// <param name="strAPI"></param>
-        /// <returns></returns>
-        public List<ProjectVO> GetProject(string strAPI)
-        {
-            var lstProject = new List<ProjectVO>();
-
-            var response = ANBTX.Get(strAPI);
-
-            if (response.IsSuccessStatusCode)
-            {
-                lstProject = response.Content.ReadAsAsync<List<ProjectVO>>().Result;
-            }
-
-            return lstProject;
         }
 
         /// <summary>

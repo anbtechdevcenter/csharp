@@ -98,26 +98,6 @@
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.button2.Location = new System.Drawing.Point(416, 204);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(74, 51);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "로그인";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(461, 342);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "개발";
-            // 
             // FrmRestAPILogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);

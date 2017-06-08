@@ -28,7 +28,6 @@ namespace AnBTech.RestAPI
         readonly string[] BASE_SURV_URL = { "/api/oauth/token", "/token" };
 
         public LoginVO loginInfo { internal get; set; }
-        public static AccessTokenVO TokenInfo { internal get; set; }
         public CookieContainer loginCookie = new CookieContainer();
 
         private void button1_Click(object sender, EventArgs e)
@@ -57,15 +56,14 @@ namespace AnBTech.RestAPI
             
             if (ANBTX.TokenValue(token) != null)
             {
-                var frmRestHome = new FrmRestAPITest();
-                frmRestHome.ShowDialog();
-                this.Close();
-            }
-        }
+                //var frmRestHome = new FrmRestAPITest();
+                //frmRestHome.ShowDialog();
+                //this.Close();
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(txtLoginPassword.Text);
+                var frmMainViewList = new FrmMainViewList();
+                frmMainViewList.Show();
+                
+            }
         }
     }
 }

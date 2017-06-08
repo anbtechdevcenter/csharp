@@ -11,6 +11,7 @@
     <AssemblyName>WinRestAPITest</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -23,7 +24,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -66,6 +66,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ANBTX_Common.cs" />
+    <Compile Include="FrmHolidayMag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmHolidayMag.Designer.cs">
+      <DependentUpon>FrmHolidayMag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmMainViewList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMainViewList.Designer.cs">
+      <DependentUpon>FrmMainViewList.cs</DependentUpon>
+    </Compile>
     <Compile Include="JWT_Module.cs" />
     <Compile Include="FrmRestAPILogin.cs">
       <SubType>Form</SubType>
@@ -115,7 +128,6 @@
     <Compile Include="FrmProjectP2.designer.cs">
       <DependentUpon>FrmProjectP2.cs</DependentUpon>
     </Compile>
-    <Compile Include="VO\AccessTokenVO.cs" />
     <Compile Include="VO\CommonCodeVO.cs" />
     <Compile Include="VO\HolidayVO.cs" />
     <Compile Include="VO\RankVO.cs" />
@@ -131,6 +143,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VO\LoginVO.cs" />
+    <EmbeddedResource Include="FrmHolidayMag.resx">
+      <DependentUpon>FrmHolidayMag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMainViewList.resx">
+      <DependentUpon>FrmMainViewList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmRestAPILogin.resx">
       <DependentUpon>FrmRestAPILogin.cs</DependentUpon>
     </EmbeddedResource>

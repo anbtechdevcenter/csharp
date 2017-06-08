@@ -102,7 +102,7 @@ namespace AnBTech.RestAPI
             try
 			{
                 
-				var lstEmployee = GetEmployee(API_URL);
+				var lstEmployee = ANBTX_Common.GetEmployee(API_URL);
 
 				if (lstEmployee == null || lstEmployee.Count == 0)
 				{
@@ -122,33 +122,13 @@ namespace AnBTech.RestAPI
 			}
 		}
 
-		/// <summary>
-		/// Employee 항목을 가져옵니다.
-		/// </summary>
-		/// <param name="strAPI"></param>
-		/// <returns></returns>
-		public List<EmployeeVO> GetEmployee(string strAPI)
-		{
-			var lstEmployee = new List<EmployeeVO>();
-
-			var response = ANBTX.Get(strAPI);
-            
-			if (response.IsSuccessStatusCode)
-			{
-				lstEmployee = response.Content.ReadAsAsync<List<EmployeeVO>>().Result;
-			}
-
-			return lstEmployee;
-		}
-
-
         #endregion
 
         private void btnUpdate_Click(object sender, EventArgs e)
 		{
 
 			// update
-			var lstEmployee = GetEmployee(API_URL);
+			var lstEmployee = ANBTX_Common.GetEmployee(API_URL);
 
 			if (lstEmployee.Any(o=>o.empId.Equals(textBox3.Text)))
 			{
@@ -192,8 +172,8 @@ namespace AnBTech.RestAPI
 
         private void button3_Click(object sender, EventArgs e)
         {
-            var frmMc = new FrmMealCoupon();
-            frmMc.ShowDialog();
+            var frmHoli = new FrmHolidayMag();
+            frmHoli.ShowDialog();
         }
 
         private void button4_Click(object sender, EventArgs e)
