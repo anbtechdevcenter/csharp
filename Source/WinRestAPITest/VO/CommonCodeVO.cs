@@ -13,17 +13,17 @@ namespace AnBTech.RestAPI.VO
     public class CommonCodeVO
     {
         public string grant_type = "password"; // 고정값
-        public string seqCode;
-        public string codeType;
-        public string codeId;
-        public string codeNm;
-        public string upCoseType;
-        public string upCodeId;
-        public string useYn;
-        public string useStartDate;
-        public string useEndDate;
-        public string registDate;
-        public string updateDate;
-        public string reason;
+        public string seqCode; // 시퀀스값
+        public string codeType; // 코드 타입
+        public string codeId; // 코드 아이디 ( 구분을 위해 )
+        public string codeNm; // 코드명
+        public string upCoseType; // 상위코드 타입
+        public string upCodeId; // 상위코드 아이디
+        public string useYn; // 사용유무
+        public string useStartDate; // 사용 시작일
+        public string useEndDate; // 사용 종료일
+        public string registDate; // 등록날짜
+        public string updateDate; // 수정날짜
+        public string reason; // 비고
     }
 }
