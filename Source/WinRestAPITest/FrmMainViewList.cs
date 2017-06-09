@@ -13,7 +13,7 @@ namespace AnBTech.RestAPI
 {
     public partial class FrmMainViewList : Form
     {
-        class_staff_management m_hstaff_management;
+        Class_staff_management m_hstaff_management;
         public FrmMainViewList()
         {
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace AnBTech.RestAPI
 
         private void FrmMainViewList_Load(object sender, EventArgs e)
         {
-            m_hstaff_management = new class_staff_management(listStaffView);
+            m_hstaff_management = new Class_staff_management(listStaffView);
             m_hstaff_management.ReadStaffMagementListItem();
         }
 
