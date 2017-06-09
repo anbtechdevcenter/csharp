@@ -52,19 +52,16 @@ namespace AnBTech.RestAPI
             };
 
             string token = ANBTX.WebRequestCheck(BASE_URL[0]+BASE_SURV_URL[0], login);
-            ANBTX.TokenValue(token);
             
             if (ANBTX.TokenValue(token) != null)
             {
-                //var frmRestHome = new FrmRestAPITest();
-                //frmRestHome.ShowDialog();
-                //this.Close();
-
-                var frmMainViewList = new FrmMainViewList();
-                frmMainViewList.Show();
+                var frmRestHome = new FrmRestAPITest();
+                frmRestHome.ShowDialog();
                 this.Hide();
-                
-                
+
+                // var frmMainViewList = new FrmMainViewList();
+                // frmMainViewList.Show();
+                // this.Hide();
             }
         }
     }

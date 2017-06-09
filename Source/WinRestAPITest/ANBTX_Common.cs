@@ -112,12 +112,69 @@ namespace AnBTech.RestAPI
         }
 
         /// <summary>
+        /// Book 항목을 가져옵니다.
+        /// </summary>
+        /// <param name="strAPI"></param>
+        /// <returns></returns>
+        public static List<BookInfoVO> GetBook(string strAPI)
+        {
+            var lstBook = new List<BookInfoVO>();
+
+            var response = ANBTX.Get(strAPI);
+
+            if (response.IsSuccessStatusCode)
+            {
+                lstBook = response.Content.ReadAsAsync<List<BookInfoVO>>().Result;
+            }
+
+            return lstBook;
+        }
+
+        /// <summary>
+        /// Book Rental 항목을 가져옵니다.
+        /// </summary>
+        /// <param name="strAPI"></param>
+        /// <returns></returns>
+        public static List<BookRentalVO> GetBookRental(string strAPI)
+        {
+            var lstBookRental = new List<BookRentalVO>();
+
+            var response = ANBTX.Get(strAPI);
+
+            if (response.IsSuccessStatusCode)
+            {
+                lstBookRental = response.Content.ReadAsAsync<List<BookRentalVO>>().Result;
+            }
+
+            return lstBookRental;
+        }
+
+        /// <summary>
+        /// Book Rental 항목을 가져옵니다.
+        /// </summary>
+        /// <param name="strAPI"></param>
+        /// <returns></returns>
+        public static List<EquipmentVO> GetDevice(string strAPI)
+        {
+            var lstDevice = new List<EquipmentVO>();
+
+            var response = ANBTX.Get(strAPI);
+
+            if (response.IsSuccessStatusCode)
+            {
+                lstDevice = response.Content.ReadAsAsync<List<EquipmentVO>>().Result;
+            }
+
+            return lstDevice;
+        }
+
+        /// <summary>
         /// 지정된 콤보박스에 데이터를 입력합니다.
         /// </summary>
         /// <param name="combo"></param>
         /// <param name="lstValue"></param>
         /// <param name="isAscending"></param>
-        private static void SetComboBox(ComboBox combo, List<string> lstValue, bool isAscending = true)
+        private static void SetComboBoxs(ComboBox combo, List<string> lstValue, bool isAscending = true)
         {
             if (lstValue.Any())
             {

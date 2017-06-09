@@ -48,24 +48,24 @@ namespace AnBTech.RestAPI
             // 직원이름 초기화.
             _lstEmployeeTotal = ANBTX_Common.GetEmployee(API_EMPLOYEE_URL);
             var lstEmpName = _lstEmployeeTotal.Select(o => o.empNm).ToList().Where(o => !string.IsNullOrEmpty(o)).ToList();
-            ANBTX_Common.SetComboBox(cboEmployeeName, lstEmpName);
+            this.SetComboBox(cboEmployeeName, lstEmpName);
 
 
             // 부서명 초기화.
             _lstTeam = _lstEmployeeTotal.Select(o => o.team).ToList().Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
-            ANBTX_Common.SetComboBox(cboTeamName, _lstTeam);
+            this.SetComboBox(cboTeamName, _lstTeam);
 
 
             // 프로젝트명 초기화.
             _lstProject = ANBTX_Common.GetProject(API_PROJECT_URL);
             var lstProject = _lstProject.Select(o => o.prjNm).Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
-            ANBTX_Common.SetComboBox(cboProjectName, lstProject);
+            this.SetComboBox(cboProjectName, lstProject);
 
 
             // 직급 초기화.
             _lstRank = ANBTX_Common.GetRank(API_RANK_URL);
             var lstRank = _lstRank.Select(o => o.rankName).ToList();
-            ANBTX_Common.SetComboBox(cboRank, lstRank);
+            this.SetComboBox(cboRank, lstRank);
 
 
             // 기간 초기화.
@@ -284,6 +284,23 @@ namespace AnBTech.RestAPI
                 ANBTX.Delete(API_EMPLOYEE_URL, empId);
                 InitControl();
                 btnSearch_Click(null, null);
+            }
+        }
+
+        /// <summary>
+        /// 지정된 콤보박스에 데이터를 입력합니다.
+        /// </summary>
+        /// <param name="combo"></param>
+        /// <param name="lstValue"></param>
+        /// <param name="isAscending"></param>
+        private void SetComboBox(ComboBox combo, List<string> lstValue, bool isAscending = true)
+        {
+            if (lstValue.Any())
+            {
+                lstValue.OrderBy(o => o);
+                combo.Items.Add("[None]");
+                combo.Items.AddRange(lstValue.ToArray());
+                combo.SelectedIndex = 0;
             }
         }
     }

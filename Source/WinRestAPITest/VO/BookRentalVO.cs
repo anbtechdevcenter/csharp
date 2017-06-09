@@ -12,9 +12,9 @@ namespace AnBTech.RestAPI.VO
 	[Serializable]
     public class BookRentalVO
     {
-        public string appDate; // ??
-        public string appEmpId; // ??
-        public string appEmpNm; // ??
+        public string appDate; // 결제(대여) 날짜
+        public string appEmpId; // 결제(대여)자 ID
+        public string appEmpNm; // 결제(대여)자 이름
         public string filingDate; // 도서 출판일
         public string regEmpId; // 등록 직원 아이디
         public string regEmpNm; // 등록 직원 이름

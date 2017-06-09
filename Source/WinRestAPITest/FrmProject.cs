@@ -138,5 +138,22 @@ namespace AnBTech.RestAPI
         {
 
         }
+
+        /// <summary>
+        /// 지정된 콤보박스에 데이터를 입력합니다.
+        /// </summary>
+        /// <param name="combo"></param>
+        /// <param name="lstValue"></param>
+        /// <param name="isAscending"></param>
+        private void SetComboBox(ComboBox combo, List<string> lstValue, bool isAscending = true)
+        {
+            if (lstValue.Any())
+            {
+                lstValue.OrderBy(o => o);
+                combo.Items.Add("[None]");
+                combo.Items.AddRange(lstValue.ToArray());
+                combo.SelectedIndex = 0;
+            }
+        }
     }
 }

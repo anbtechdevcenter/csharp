@@ -67,6 +67,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ANBTX_Common.cs" />
+    <Compile Include="FrmBookMag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBookMag.Designer.cs">
+      <DependentUpon>FrmBookMag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmBookRentalMag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBookRentalMag.Designer.cs">
+      <DependentUpon>FrmBookRentalMag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmDeviceMag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDeviceMag.Designer.cs">
+      <DependentUpon>FrmDeviceMag.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmHolidayMag.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -79,7 +97,7 @@
     <Compile Include="FrmMainViewList.Designer.cs">
       <DependentUpon>FrmMainViewList.cs</DependentUpon>
     </Compile>
-    <Compile Include="JWT_Module.cs" />
+    <Compile Include="ANBTX_JWT_module.cs" />
     <Compile Include="FrmRestAPILogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,6 +149,7 @@
     <Compile Include="staffMn\Class_staff_management.cs" />
     <Compile Include="VO\BookInfoVO.cs" />
     <Compile Include="VO\BookRentalVO.cs" />
+    <Compile Include="VO\SessionVO.cs" />
     <Compile Include="VO\CodeTypeVO.cs" />
     <Compile Include="VO\EquipmentVO.cs" />
     <Compile Include="VO\MenuInfoVO.cs" />
@@ -149,6 +168,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VO\LoginVO.cs" />
+    <EmbeddedResource Include="FrmBookMag.resx">
+      <DependentUpon>FrmBookMag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmBookRentalMag.resx">
+      <DependentUpon>FrmBookRentalMag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDeviceMag.resx">
+      <DependentUpon>FrmDeviceMag.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmHolidayMag.resx">
       <DependentUpon>FrmHolidayMag.cs</DependentUpon>
     </EmbeddedResource>

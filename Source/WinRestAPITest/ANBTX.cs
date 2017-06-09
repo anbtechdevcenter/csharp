@@ -1,13 +1,17 @@
 ﻿using AnBTech.RestAPI.VO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace AnBTech.RestAPI
 {
@@ -19,6 +23,9 @@ namespace AnBTech.RestAPI
 
         public static string accessTokenHold;
         public static string notConvertaccessTokenHold;
+
+        public static SessionVO session { internal get; set; }
+
         /// <summary>
         /// Connection 객체를 생성합니다.
         /// </summary>
@@ -137,9 +144,9 @@ namespace AnBTech.RestAPI
 
         public static string TokenValue(string token)
         {
-            try
-            {
-                char[] TokenCheck = { ',' };
+            try           {
+
+                 char[] TokenCheck = { ',' };
                 string[] accessTokenCheck = token.Split(TokenCheck);
                 string[] tokenSplit = accessTokenCheck[0].Split(':');
                 TokenSet(tokenSplit[1].Split('"')[1]);
@@ -155,6 +162,9 @@ namespace AnBTech.RestAPI
         {
             notConvertaccessTokenHold = tokenVal;
             accessTokenHold = Newtonsoft.Json.JsonConvert.SerializeObject(tokenVal);
+            Console.WriteLine(" 값 체크 : " + notConvertaccessTokenHold);
+            Console.WriteLine(" 값 체크 : " + accessTokenHold);
+            session = ANBTX_JWT_module.SessionCheck(tokenVal);
             return accessTokenHold;
         }
     }

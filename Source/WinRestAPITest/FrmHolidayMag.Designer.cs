@@ -87,6 +87,7 @@
             this.button3.TabIndex = 6;
             this.button3.Text = "휴가 및 특근 등록";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -96,6 +97,7 @@
             this.button4.TabIndex = 5;
             this.button4.Text = "조회";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // dataGridHoliday
             // 

@@ -34,6 +34,7 @@ namespace AnBTech.RestAPI
         private void InitControl()
         {
             commGetHoliday();
+            getLoadCombo();
         }
 
         private void commGetHoliday()
@@ -52,6 +53,22 @@ namespace AnBTech.RestAPI
             {
                 MessageBox.Show("An exception occurred :" + ex.ToString());
             }
+        }
+
+        private void getLoadCombo()
+        {
+            //공통 코드 초기화
+            _lstCommonCode = ANBTX_Common.GetCodeCommon(API_COMMON_CODE_URL);
+
+            //직급 초기화
+            _lstRank = ANBTX_Common.GetRank(API_RANK_URL);
+            var lstRank = _lstRank.Select(o => o.rankName).ToList();
+            this.SetComboBox(cboRank, lstRank);
+
+            //프로젝트 초기화
+            _lstProject = ANBTX_Common.GetProject(API_PROJECT_URL);
+            var lstProject = _lstProject.Select(o => o.prjNm).Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
+            this.SetComboBox(cboProject, lstProject);
         }
 
         private void makeData(List<HolidayVO> lstHoliday)
@@ -77,6 +94,11 @@ namespace AnBTech.RestAPI
             {
                 dr = dt.NewRow();
                 //dr["MEMBER"] = "이름";
+                dr["사번"] = k.empId;
+                dr["이름"] = k.empNm;
+                dr["일수"] = k.holidayDay;
+                dr["시작일자"] = k.holidaySdate;
+                dr["종료일자"] = k.holidayEdate;
 
                 dt.Rows.Add(dr);
             }
@@ -85,23 +107,39 @@ namespace AnBTech.RestAPI
 
         private void FrmHolidayMag_Load(object sender, EventArgs e)
         {
-            //공통 코드 초기화
-            _lstCommonCode = ANBTX_Common.GetCodeCommon(API_COMMON_CODE_URL);
+            
+        }
 
-            //직급 초기화
-            _lstRank = ANBTX_Common.GetRank(API_RANK_URL);
-            var lstRank = _lstRank.Select(o => o.rankName).ToList();
-            ANBTX_Common.SetComboBox(cboRank, lstRank);
-
-            //프로젝트 초기화
-            _lstProject = ANBTX_Common.GetProject(API_PROJECT_URL);
-            var lstProject = _lstProject.Select(o => o.prjNm).Where(o => !string.IsNullOrEmpty(o)).Distinct().ToList();
-            ANBTX_Common.SetComboBox(cboProject, lstProject);
+        /// <summary>
+        /// 지정된 콤보박스에 데이터를 입력합니다.
+        /// </summary>
+        /// <param name="combo"></param>
+        /// <param name="lstValue"></param>
+        /// <param name="isAscending"></param>
+        private void SetComboBox(ComboBox combo, List<string> lstValue, bool isAscending = true)
+        {
+            if (lstValue.Any())
+            {
+                lstValue.OrderBy(o => o);
+                combo.Items.Add("[None]");
+                combo.Items.AddRange(lstValue.ToArray());
+                combo.SelectedIndex = 0;
+            }
         }
 
         private void dataGridHoliday_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("기능 구현중... ( 검색기능 ) \n\n 현재 화면 인터페이스 변경으로 기능이 미흡한 점 양해 부탁드립니다.");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("기능 구현중... ( 검색기능 ) \n\n 현재 화면 인터페이스 변경으로 기능이 미흡한 점 양해 부탁드립니다.");
         }
     }
 }
